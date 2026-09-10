@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aman <span>संग</span> Shivani — Wedding Invitation</title>
+  <link rel="icon" href="data:," />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -9243,7 +9244,7 @@ section[data-section="intro"] > *:not(.meet-couple-floral-border){
 
         function step(now) {
           if (audio.paused) return;
-          var progress = Math.min(1, (now - start) / duration);
+          var progress = Math.max(0, Math.min(1, (now - start) / duration));
           audio.volume = targetVolume * progress;
           if (progress < 1) requestAnimationFrame(step);
         }
@@ -10455,7 +10456,9 @@ section[data-section="wedding-day"] .wedding-day-side .date-badge,
       lastX = null;
       var p = point(e);
       scratch(p.x, p.y);
-      e.preventDefault();
+      if (typeof e.preventDefault === 'function' && e.cancelable) {
+        e.preventDefault();
+      }
     }
 
     function move(e) {
@@ -10464,7 +10467,9 @@ section[data-section="wedding-day"] .wedding-day-side .date-badge,
       scratch(p.x, p.y);
       clearTimeout(revealTimer);
       revealTimer = setTimeout(revealCheck, 80);
-      e.preventDefault();
+      if (typeof e.preventDefault === 'function' && e.cancelable) {
+        e.preventDefault();
+      }
     }
 
     function end(e) {
@@ -10483,9 +10488,11 @@ section[data-section="wedding-day"] .wedding-day-side .date-badge,
 
     /* iOS/Safari fallback for older WebViews. */
     canvas.addEventListener('touchstart', function (e) {
+      if (e.cancelable) e.preventDefault();
       if (e.touches.length) start(e.touches[0]);
     }, { passive: false });
     canvas.addEventListener('touchmove', function (e) {
+      if (e.cancelable) e.preventDefault();
       if (e.touches.length) move(e.touches[0]);
     }, { passive: false });
     canvas.addEventListener('touchend', end, { passive: false });
@@ -11337,11 +11344,10 @@ body.gate-opening #entry-gate .gate-door-right{
 #entry-gate{
     background-color: #07070d !important;
     background-image:
-      url("./open-the-invitation-border.jpg"),
       url("./assets/open-the-invitation-border.jpg") !important;
-    background-position: center center, center center !important;
-    background-size: 100% 100%, 100% 100% !important;
-    background-repeat: no-repeat, no-repeat !important;
+    background-position: center center !important;
+    background-size: 100% 100% !important;
+    background-repeat: no-repeat !important;
   }
 /* The wedding-door artwork itself remains the visible opening layer. */
 #entry-gate .gate-door{
