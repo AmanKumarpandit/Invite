@@ -1278,7 +1278,7 @@
       box-shadow:
         0 14px 48px rgba(0, 0, 0, 0.42),
         0 2px 0 rgba(255, 255, 255, 0.03) inset;
-      margin-bottom: 22px;
+      margin-bottom: 16px;
       transition: transform 0.35s ease, box-shadow 0.35s ease;
     }
 
@@ -1322,7 +1322,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 20px;
+      padding: 13px 18px;
       position: relative;
       overflow: hidden;
       gap: 10px;
@@ -1396,35 +1396,35 @@
       text-overflow: ellipsis;
     }
 
-    /* Day badge redesigned as a wax-stamped ivory date tag, with a
-   folded-corner "sealed card" detail — reads as an invitation
-   detail rather than a digital scoreboard number. */
+    /* Day badge redesigned as a round gold medallion (matches the
+   icon-badge's dashed-ring language) instead of a folded sticky-note tag. */
     .fest-day-badge {
       position: relative;
-      text-align: center;
-      background: linear-gradient(160deg, #fdf3d8 0%, #f0dba0 100%);
-      border: 1px solid rgba(255, 255, 255, 0.55);
-      border-radius: 11px 11px 11px 3px;
-      padding: 7px 14px 6px;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 34% 26%, #fdf3d8 0%, #eccf94 55%, #c9a458 100%);
+      border: 1.5px solid rgba(255, 255, 255, 0.6);
       flex-shrink: 0;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.65);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.55);
     }
 
     .fest-day-badge::after {
       content: '';
       position: absolute;
-      right: -1px;
-      bottom: -1px;
-      width: 0;
-      height: 0;
-      border-style: solid;
-      border-width: 0 0 9px 9px;
-      border-color: transparent transparent rgba(120, 78, 25, 0.28) transparent;
+      inset: -6px;
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 255, 255, 0.38);
+      pointer-events: none;
     }
 
     .fest-day-n {
       font-family: 'Yatra One', 'Noto Serif Devanagari', serif;
-      font-size: clamp(21px, 5vw, 27px);
+      font-size: clamp(18px, 4.4vw, 22px);
       font-weight: 400;
       color: #5a2c0f;
       line-height: 1;
@@ -1433,19 +1433,19 @@
 
     .fest-day-m {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 9px;
-      letter-spacing: 2px;
+      font-size: 8px;
+      letter-spacing: 1.8px;
       text-transform: uppercase;
       color: #7a4a20;
-      margin-top: 3px;
+      margin-top: 2px;
     }
 
     /* Content body */
     .fest-body {
-      padding: 16px 20px 20px;
+      padding: 12px 18px 14px;
       display: flex;
       align-items: flex-start;
-      gap: 14px;
+      gap: 12px;
       border-top: 1px solid rgba(224, 178, 60, 0.16);
       position: relative;
     }
@@ -1456,7 +1456,7 @@
       border-radius: 3px;
       align-self: stretch;
       flex-shrink: 0;
-      min-height: 44px;
+      min-height: 24px;
     }
 
     .fest-details {
@@ -1487,6 +1487,33 @@
     .fest-venue svg {
       flex-shrink: 0;
       opacity: 0.6;
+    }
+
+    /* One shared venue chip per side, shown once above the card stack,
+   instead of repeating the same address in every event card. */
+    .fest-shared-venue {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      margin: 0 auto 16px;
+      padding: 9px 18px;
+      width: fit-content;
+      max-width: 94%;
+      border-radius: 30px;
+      background: rgba(224, 178, 60, 0.07);
+      border: 1px solid rgba(224, 178, 60, 0.24);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(10.5px, 2.4vw, 12.5px);
+      color: rgba(224, 240, 255, 0.82);
+      letter-spacing: 0.3px;
+      text-align: center;
+    }
+
+    .fest-shared-venue svg {
+      flex-shrink: 0;
+      opacity: 0.8;
+      color: var(--champagne, #e0b23c);
     }
 
     /* small closing flourish, bottom-right of the card body */
@@ -1625,7 +1652,12 @@
     }
 
     .fest-card.ev-wedding .fest-day-n {
-      font-size: 34px;
+      font-size: 27px;
+    }
+
+    .fest-card.ev-wedding .fest-day-badge {
+      width: 64px;
+      height: 64px;
     }
 
     .fest-card.ev-wedding .fest-icon-badge {
@@ -1663,7 +1695,7 @@
     /* ── Responsive ── */
     @media (max-width: 599px) {
       .fest-banner {
-        padding: 14px 18px;
+        padding: 11px 16px;
       }
 
       .fest-ev-name {
@@ -1676,13 +1708,18 @@
         font-size: 20px;
       }
 
+      .fest-day-badge {
+        width: 46px;
+        height: 46px;
+      }
+
       .fest-day-n {
-        font-size: 23px;
+        font-size: 19px;
       }
 
       .fest-body {
-        padding: 16px 18px 20px;
-        gap: 14px;
+        padding: 10px 16px 12px;
+        gap: 12px;
       }
 
       .fest-card.ev-wedding .fest-ev-name {
@@ -1690,7 +1727,12 @@
       }
 
       .fest-card.ev-wedding .fest-day-n {
-        font-size: 27px;
+        font-size: 22px;
+      }
+
+      .fest-card.ev-wedding .fest-day-badge {
+        width: 54px;
+        height: 54px;
       }
 
       .fest-card.ev-wedding .fest-icon-badge {
@@ -1712,7 +1754,7 @@
 
     @media (max-width: 479px) {
       .fest-banner {
-        padding: 12px 14px;
+        padding: 10px 12px;
         gap: 10px;
         flex-wrap: nowrap;
       }
@@ -1732,20 +1774,21 @@
       }
 
       .fest-day-badge {
-        padding: 6px 10px;
+        width: 40px;
+        height: 40px;
         flex-shrink: 0;
       }
 
       .fest-day-n {
-        font-size: 19px;
+        font-size: 16px;
       }
 
       .fest-day-m {
-        font-size: 8px;
+        font-size: 7px;
       }
 
       .fest-body {
-        padding: 14px 14px 18px;
+        padding: 10px 12px 12px;
         gap: 10px;
       }
 
@@ -1770,7 +1813,12 @@
       }
 
       .fest-card.ev-wedding .fest-day-n {
-        font-size: 21px;
+        font-size: 19px;
+      }
+
+      .fest-card.ev-wedding .fest-day-badge {
+        width: 46px;
+        height: 46px;
       }
 
       .fest-card.ev-wedding .fest-icon-badge {
@@ -1780,7 +1828,7 @@
       }
 
       .fest-card.ev-wedding .fest-banner {
-        padding: 14px;
+        padding: 12px;
       }
 
       .fest-banner-left {
@@ -8348,24 +8396,26 @@
   <style id="wedding-fireworks-style">
     /* ─────────────────────────────────────────────────────────────
    WEDDING FIREWORKS
-   Canvas is confined to the HERO / wedding-invitation container.
-   It sits behind the floral frame + typography and never captures input.
+   Fixed to the viewport (like the site's own #bg-canvas starfield)
+   so the show keeps running behind every section as the page
+   scrolls, not just within the hero. Still sits behind the floral
+   frame + typography locally and never captures input.
    ───────────────────────────────────────────────────────────── */
     .hero {
       isolation: isolate;
     }
 
     #wedding-fireworks {
-      position: absolute;
+      position: fixed;
       inset: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       z-index: 1;
       display: block;
       pointer-events: none;
-      opacity: .82;
+      opacity: .97;
       mix-blend-mode: screen;
-      filter: saturate(1.12) contrast(1.04);
+      filter: saturate(1.45) contrast(1.12) brightness(1.08);
     }
 
     .hero-atmosphere {
@@ -8390,7 +8440,7 @@
 
     @media (max-width:767px) {
       #wedding-fireworks {
-        opacity: .74;
+        opacity: .90;
       }
     }
 
@@ -8402,11 +8452,13 @@
   </style>
 
   <style id="wedding-lightning-style">
+    /* Fixed to the viewport too, so the occasional thunderbolt keeps
+       flashing behind later sections instead of stopping at the hero. */
     #wedding-lightning {
-      position: absolute;
+      position: fixed;
       inset: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       z-index: 2;
       display: block;
       pointer-events: none;
@@ -8423,6 +8475,39 @@
     @media (prefers-reduced-motion:reduce) {
       #wedding-lightning {
         opacity: .30;
+      }
+    }
+  </style>
+
+  <style id="wedding-drones-style">
+    /* ─────────────────────────────────────────────────────────────
+   WEDDING DRONE LIGHT SHOW
+   Also fixed to the viewport so the formation keeps drifting behind
+   every section on scroll. Sits above the dark atmosphere overlay
+   inside the hero, and above the deep-space starfield everywhere
+   else, so it stays a soft glow rather than a bright foreground effect.
+   ───────────────────────────────────────────────────────────── */
+    #wedding-drones {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      display: block;
+      pointer-events: none;
+      opacity: .88;
+      mix-blend-mode: screen;
+    }
+
+    @media (max-width:767px) {
+      #wedding-drones {
+        opacity: .70;
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      #wedding-drones {
+        opacity: .32;
       }
     }
   </style>
@@ -8595,6 +8680,8 @@
     <img class="hero-floral-frame" src="assets/wedding-invitation-border.jpg" alt="" aria-hidden="true"
       draggable="false" />
     <div class="hero-atmosphere"></div>
+    <!-- Ambient drone light-show art: painted above the atmosphere overlay so it reads clearly -->
+    <canvas id="wedding-drones" class="wedding-drones" aria-hidden="true"></canvas>
     <!-- Continuous realistic fireworks: background-only, pointer-events disabled -->
     <canvas id="wedding-fireworks" class="wedding-fireworks" aria-hidden="true"></canvas>
     <!-- Occasional cinematic thunderbolt lightning, behind all invitation content -->
@@ -8995,6 +9082,14 @@
       <!-- ═════════════════ GROOM'S SIDE FUNCTIONS ═════════════════ -->
       <div class="fest-side-container groom-side-events active">
 
+        <p class="fest-shared-venue">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          English Chichroun, Akbarnagar, Bhagalpur, Bihar
+        </p>
+
         <!-- Groom Haldi -->
         <div class="fest-card ev-haldi reveal on">
           <div class="fest-banner">
@@ -9014,13 +9109,6 @@
             <div class="fest-accent-bar"></div>
             <div class="fest-details">
               <p class="fest-time">Wednesday · 10:00 AM</p>
-              <p class="fest-venue">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-                English Chichroun, Akbarnagar, Bhagalpur, Bihar
-              </p>
             </div>
           </div>
         </div>
@@ -9044,13 +9132,6 @@
             <div class="fest-accent-bar"></div>
             <div class="fest-details">
               <p class="fest-time">Thursday · 04:00 PM</p>
-              <p class="fest-venue">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-                English Chichroun, Akbarnagar, Bhagalpur, Bihar
-              </p>
             </div>
           </div>
         </div>
@@ -9074,13 +9155,6 @@
             <div class="fest-accent-bar"></div>
             <div class="fest-details">
               <p class="fest-time">Friday · 06:00 PM</p>
-              <p class="fest-venue">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-                English Chichroun, Akbarnagar, Bhagalpur, Bihar
-              </p>
             </div>
           </div>
         </div>
@@ -9134,13 +9208,6 @@
             <div class="fest-accent-bar"></div>
             <div class="fest-details">
               <p class="fest-time">Monday · 07:00 PM Onwards</p>
-              <p class="fest-venue">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-                English Chichroun, Akbarnagar, Bhagalpur, Bihar
-              </p>
             </div>
           </div>
         </div>
@@ -9149,6 +9216,14 @@
 
       <!-- ═════════════════ BRIDE'S SIDE FUNCTIONS ═════════════════ -->
       <div class="fest-side-container bride-side-events">
+
+        <p class="fest-shared-venue">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          जोंकी, धोरैया, बांका, बिहार
+        </p>
 
         <!-- Bride Haldi -->
         <div class="fest-card ev-haldi reveal on">
@@ -9169,13 +9244,6 @@
             <div class="fest-accent-bar"></div>
             <div class="fest-details">
               <p class="fest-time">Thursday · 10:00 AM</p>
-              <p class="fest-venue">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-                जोंकी, धोरैया, बांका, बिहार
-              </p>
             </div>
           </div>
         </div>
@@ -9199,13 +9267,6 @@
             <div class="fest-accent-bar"></div>
             <div class="fest-details">
               <p class="fest-time">Friday · 02:00 PM</p>
-              <p class="fest-venue">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-                जोंकी, धोरैया, बांका, बिहार
-              </p>
             </div>
           </div>
         </div>
@@ -9229,13 +9290,6 @@
             <div class="fest-accent-bar"></div>
             <div class="fest-details">
               <p class="fest-time">Saturday · 09:00 AM</p>
-              <p class="fest-venue">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-                जोंकी, धोरैया, बांका, बिहार
-              </p>
             </div>
           </div>
         </div>
@@ -9259,13 +9313,6 @@
             <div class="fest-accent-bar"></div>
             <div class="fest-details">
               <p class="fest-time">Saturday · 07:00 PM Onwards</p>
-              <p class="fest-venue">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-                जोंकी, धोरैया, बांका, बिहार
-              </p>
             </div>
           </div>
         </div>
@@ -9289,13 +9336,6 @@
             <div class="fest-accent-bar"></div>
             <div class="fest-details">
               <p class="fest-time">Sunday · 08:00 AM</p>
-              <p class="fest-venue">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-                जोंकी, धोरैया, बांका, बिहार
-              </p>
             </div>
           </div>
         </div>
@@ -12144,17 +12184,20 @@
 
         const palettes = [
           ['#ffd76a', '#fff3c4', '#f6a83a'],       // champagne gold
-          ['#ff62b2', '#ffd0e7', '#b86cff'],       // pink / violet
-          ['#37e9ff', '#b8f8ff', '#5c9cff'],       // cyan / blue
-          ['#8dff9b', '#eaffef', '#39d98a'],       // emerald
-          ['#ff8b5c', '#ffe0a8', '#ff4d6d'],       // coral
+          ['#ff2f76', '#ffb3d1', '#b1163f'],       // deep rose / maroon (Indian wedding accent)
+          ['#2f6dff', '#9fd0ff', '#122f8f'],       // sapphire
+          ['#0fae65', '#b6ffcf', '#046b3c'],       // deep emerald
+          ['#8b2fff', '#e0c6ff', '#4d1594'],       // amethyst
+          ['#ff5a3c', '#ffd2a8', '#c22a00'],       // deep ember
+          ['#e0b23c', '#fff0c2', '#a5771e'],       // antique gold
           ['#fff', '#ffe38b', '#ff9f43']            // white gold
         ];
 
         function resize() {
-          const rect = hero.getBoundingClientRect();
-          W = Math.max(1, Math.round(rect.width));
-          H = Math.max(1, Math.round(rect.height));
+          // Fixed viewport-sized canvas (like the site's #bg-canvas), so
+          // the show keeps flowing behind every section, not just the hero.
+          W = Math.max(1, window.innerWidth);
+          H = Math.max(1, window.innerHeight);
           DPR = Math.min(window.devicePixelRatio || 1, 2);
           canvas.width = Math.round(W * DPR);
           canvas.height = Math.round(H * DPR);
@@ -12192,57 +12235,104 @@
           });
         }
 
+        // Top-level particle spawner (not nested in explode) so crossette
+        // splits can spawn fresh particles from mid-flight positions too.
+        function addParticle(x, y, angle, speed, size, life, gravity, color, twinkle, crossetteAt) {
+          particles.push({
+            x: x, y: y,
+            px: x, py: y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            size: size,
+            life: life,
+            maxLife: life,
+            gravity: gravity,
+            color: color,
+            twinkle: twinkle,
+            drag: rand(.982, .993),
+            crossetteAt: crossetteAt || 0,
+            hasSplit: false
+          });
+        }
+
+        function heartDir(t) {
+          const hx = 16 * Math.pow(Math.sin(t), 3);
+          const hy = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+          return { angle: Math.atan2(hy, hx), dist: Math.sqrt(hx * hx + hy * hy) };
+        }
+
         function explode(r) {
           const colors = r.hue;
           const count = Math.round(rand(42, 78));
-          const type = pick(['sphere', 'sphere', 'willow', 'ring', 'double']);
+          const type = pick(['sphere', 'sphere', 'peony', 'willow', 'ring', 'double', 'crossette', 'heart']);
 
           flashes.push({
             x: r.x, y: r.y, life: 0, max: .16,
             color: colors[1], radius: rand(18, 30)
           });
 
-          function addParticle(angle, speed, size, life, gravity, color, twinkle) {
-            particles.push({
-              x: r.x, y: r.y,
-              px: r.x, py: r.y,
-              vx: Math.cos(angle) * speed,
-              vy: Math.sin(angle) * speed,
-              size: size,
-              life: life,
-              maxLife: life,
-              gravity: gravity,
-              color: color,
-              twinkle: twinkle,
-              drag: rand(.982, .993)
-            });
-          }
-
           if (type === 'ring') {
             for (let i = 0; i < count; i++) {
               const a = (Math.PI * 2 * i / count) + rand(-.025, .025);
-              addParticle(a, rand(190, 260), rand(1.0, 2.0), rand(1.05, 1.55),
+              addParticle(r.x, r.y, a, rand(190, 260), rand(1.0, 2.0), rand(1.05, 1.55),
                 rand(32, 58), colors[i % 2], true);
             }
           } else if (type === 'willow') {
             for (let i = 0; i < count; i++) {
               const a = rand(0, Math.PI * 2);
               const s = rand(125, 300) * (Math.random() < .28 ? .55 : 1);
-              addParticle(a, s, rand(1.0, 2.3), rand(1.45, 2.25),
+              addParticle(r.x, r.y, a, s, rand(1.0, 2.3), rand(1.45, 2.25),
                 rand(72, 115), colors[Math.random() < .7 ? 0 : 1], true);
+            }
+          } else if (type === 'peony') {
+            // Dense, round bloom with a richer core — the classic "big" firework.
+            for (let i = 0; i < count + 18; i++) {
+              const a = rand(0, Math.PI * 2);
+              const s = rand(150, 340);
+              addParticle(r.x, r.y, a, s, rand(1.3, 2.4), rand(1.2, 1.9),
+                rand(55, 90), colors[i % colors.length], true);
+            }
+            for (let i = 0; i < Math.round(count * .4); i++) {
+              const a = rand(0, Math.PI * 2);
+              addParticle(r.x, r.y, a, rand(55, 130), rand(.7, 1.3), rand(.8, 1.2),
+                rand(35, 60), colors[1], true);
+            }
+          } else if (type === 'crossette') {
+            // A share of particles split again mid-flight into a mini-burst.
+            for (let i = 0; i < count; i++) {
+              const a = rand(0, Math.PI * 2);
+              const s = rand(140, 260);
+              const life = rand(1.0, 1.5);
+              const willSplit = Math.random() < .45;
+              addParticle(r.x, r.y, a, s, rand(1.1, 2.0), life,
+                rand(45, 75), colors[i % colors.length], true,
+                willSplit ? life * rand(.35, .55) : 0);
+            }
+          } else if (type === 'heart') {
+            // Wedding motif: particles trace a heart silhouette as they expand.
+            for (let i = 0; i < count; i++) {
+              const t = (i / count) * Math.PI * 2;
+              const h = heartDir(t);
+              addParticle(r.x, r.y, h.angle, h.dist * rand(11, 14), rand(1.2, 2.1),
+                rand(1.15, 1.75), rand(55, 85), colors[i % 2], true);
+            }
+            for (let i = 0; i < Math.round(count * .35); i++) {
+              const a = rand(0, Math.PI * 2);
+              addParticle(r.x, r.y, a, rand(20, 70), rand(.6, 1.1), rand(.6, 1.0),
+                rand(35, 55), '#ffffff', true);
             }
           } else {
             for (let i = 0; i < count; i++) {
               const a = rand(0, Math.PI * 2);
               const s = rand(125, 315) * (Math.random() < .16 ? rand(1.15, 1.45) : 1);
-              addParticle(a, s, rand(1.0, 2.15), rand(.9, 1.55),
+              addParticle(r.x, r.y, a, s, rand(1.0, 2.15), rand(.9, 1.55),
                 rand(48, 82), colors[i % colors.length], true);
             }
 
             if (type === 'double') {
               for (let i = 0; i < Math.round(count * .48); i++) {
                 const a = rand(0, Math.PI * 2);
-                addParticle(a, rand(65, 145), rand(.8, 1.5), rand(.75, 1.15),
+                addParticle(r.x, r.y, a, rand(65, 145), rand(.8, 1.5), rand(.75, 1.15),
                   rand(35, 62), colors[2], false);
               }
             }
@@ -12251,7 +12341,7 @@
           // Fine glitter around every burst.
           for (let i = 0; i < Math.round(count * .28); i++) {
             const a = rand(0, Math.PI * 2);
-            addParticle(a, rand(45, 105), rand(.45, 1.05), rand(.55, .95),
+            addParticle(r.x, r.y, a, rand(45, 105), rand(.45, 1.05), rand(.55, .95),
               rand(30, 55), '#ffffff', true);
           }
         }
@@ -12308,6 +12398,12 @@
 
             drawGlow(r.x, r.y, 18, r.hue[1], .10);
 
+            // Occasional trailing spark off the rising rocket, for realism.
+            if (Math.random() < .35) {
+              addParticle(r.x, r.y, rand(0, Math.PI * 2), rand(10, 40), rand(.4, .8),
+                rand(.22, .4), rand(15, 30), r.hue[1], false, 0);
+            }
+
             // Detonate near the chosen altitude or when the rocket starts falling.
             if (r.y <= r.targetY || r.vy >= -45 || r.life >= r.maxLife + .22) {
               explode(r);
@@ -12329,6 +12425,16 @@
           for (let i = particles.length - 1; i >= 0; i--) {
             const p = particles[i];
             p.life -= dt;
+
+            if (p.crossetteAt && !p.hasSplit && p.life <= p.crossetteAt) {
+              p.hasSplit = true;
+              for (let k = 0; k < 5; k++) {
+                const a2 = rand(0, Math.PI * 2);
+                addParticle(p.x, p.y, a2, rand(55, 115), rand(.7, 1.3), rand(.35, .6),
+                  rand(28, 48), p.color, true, 0);
+              }
+            }
+
             if (p.life <= 0) { particles.splice(i, 1); continue; }
 
             p.px = p.x; p.py = p.y;
@@ -12407,13 +12513,15 @@
         let W = 1, H = 1, DPR = 1;
         let raf = 0, last = performance.now();
         let nextStrike = 3200;
+        let nextSheet = 5400;
         let bolts = [];
         let flashes = [];
 
         function resize() {
-          const rect = hero.getBoundingClientRect();
-          W = Math.max(1, Math.round(rect.width));
-          H = Math.max(1, Math.round(rect.height));
+          // Fixed viewport-sized canvas (like the site's #bg-canvas), so
+          // the show keeps flowing behind every section, not just the hero.
+          W = Math.max(1, window.innerWidth);
+          H = Math.max(1, window.innerHeight);
           DPR = Math.min(window.devicePixelRatio || 1, 2);
           canvas.width = Math.round(W * DPR);
           canvas.height = Math.round(H * DPR);
@@ -12423,6 +12531,7 @@
         }
 
         function rand(a, b) { return a + Math.random() * (b - a); }
+        function pick(a) { return a[(Math.random() * a.length) | 0]; }
 
         function makeBolt() {
           // Mostly side/upper-area strikes so the center typography stays clean.
@@ -12449,21 +12558,36 @@
               const branch = [];
               let bx = p.x, by = p.y;
               const dir = Math.random() < .5 ? -1 : 1;
-              for (let j = 0; j < Math.floor(rand(2, 5)); j++) {
+              const twigs = Math.floor(rand(2, 5));
+              for (let j = 0; j < twigs; j++) {
                 bx += dir * rand(8, 24);
                 by += rand(12, 30);
                 branch.push({ x: bx, y: by });
+
+                // Second-tier twig off the branch — thin storm-cloud tendrils.
+                if (j === Math.floor(twigs / 2) && Math.random() < .5) {
+                  const twig = [{ x: bx, y: by }];
+                  let tx = bx, ty = by;
+                  const tdir = Math.random() < .5 ? -1 : 1;
+                  for (let m = 0; m < Math.floor(rand(1, 3)); m++) {
+                    tx += tdir * rand(5, 14);
+                    ty += rand(8, 18);
+                    twig.push({ x: tx, y: ty });
+                  }
+                  branches.push(twig);
+                }
               }
               branches.push(branch);
             }
           }
 
+          // Deep storm palette: cool white-blue core bolts, occasional indigo.
           bolts.push({
             pts, branches,
             born: performance.now(),
             life: rand(.32, .65),
             flickers: Math.floor(rand(2, 4)),
-            color: Math.random() < .55 ? '#eaf8ff' : '#bfeaff'
+            color: pick(['#eaf8ff', '#bfeaff', '#d6c6ff'])
           });
 
           flashes.push({
@@ -12473,20 +12597,26 @@
           });
         }
 
-        function strokePath(points, width, alpha, blur) {
+        function strokePath(points, width, alpha, blur, rgb) {
           if (points.length < 2) return;
+          const c = rgb || '225,247,255';
           ctx.save();
           ctx.lineCap = 'round';
           ctx.lineJoin = 'round';
           ctx.shadowBlur = blur;
           ctx.shadowColor = 'rgba(190,235,255,.95)';
-          ctx.strokeStyle = 'rgba(225,247,255,' + alpha + ')';
+          ctx.strokeStyle = 'rgba(' + c + ',' + alpha + ')';
           ctx.lineWidth = width;
           ctx.beginPath();
           ctx.moveTo(points[0].x, points[0].y);
           for (let i = 1; i < points.length; i++) ctx.lineTo(points[i].x, points[i].y);
           ctx.stroke();
           ctx.restore();
+        }
+
+        function toRgb(hex) {
+          const n = parseInt(hex.slice(1), 16);
+          return ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255);
         }
 
         function frame(now) {
@@ -12499,6 +12629,13 @@
             // Rare secondary bolt gives the impression of a natural lightning cluster.
             if (Math.random() < .28) setTimeout(makeBolt, rand(110, 420));
             nextStrike = now + rand(4200, 9000);
+          }
+
+          // Distant "sheet lightning" — a soft glow-only pulse with no visible
+          // bolt, the way a storm looks when a strike happens behind the clouds.
+          if (now >= nextSheet) {
+            flashes.push({ born: now, life: .55, strength: rand(.05, .11) });
+            nextSheet = now + rand(6000, 12000);
           }
 
           // Atmospheric flash, deliberately subtle so it does not wash out the invitation.
@@ -12530,19 +12667,20 @@
 
             const fade = Math.min(1, age / .045, (b.life - age) / .12);
             const a = .92 * fade;
+            const tint = toRgb(b.color);
 
-            // Wide atmospheric glow.
-            strokePath(b.pts, 7, a * .18, 22);
-            strokePath(b.pts, 3, a * .40, 10);
-            strokePath(b.pts, 1.15, a, b.color === '');
+            // Wide atmospheric glow, tinted with the bolt's own hue.
+            strokePath(b.pts, 7, a * .18, 22, tint);
+            strokePath(b.pts, 3, a * .40, 10, tint);
+            strokePath(b.pts, 1.15, a, 6, tint);
             for (const branch of b.branches) {
-              strokePath(branch, 4, a * .14, 15);
-              strokePath(branch, 1, a * .72, 7);
+              strokePath(branch, 4, a * .14, 15, tint);
+              strokePath(branch, 1, a * .72, 7, tint);
             }
 
             // Hot white core.
-            strokePath(b.pts, 1.15, a * .98, 5);
-            for (const branch of b.branches) strokePath(branch, .8, a * .78, 3);
+            strokePath(b.pts, 1.15, a * .98, 5, '255,255,255');
+            for (const branch of b.branches) strokePath(branch, .8, a * .78, 3, '255,255,255');
           }
 
           raf = requestAnimationFrame(frame);
@@ -12560,6 +12698,217 @@
       }
     })();
   </script>
+
+  <script id="wedding-drones-script">
+    (function () {
+      'use strict';
+
+      function initWeddingDrones() {
+        const canvas = document.getElementById('wedding-drones');
+        const hero = canvas && canvas.closest('.hero');
+        if (!canvas || !hero) return;
+
+        const ctx = canvas.getContext('2d', { alpha: true });
+        if (!ctx) return;
+
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const isSmall = window.matchMedia('(max-width: 767px)').matches;
+        const COUNT = isSmall ? 30 : 60;
+
+        let W = 1, H = 1, DPR = 1;
+        let raf = 0;
+        let running = true;
+
+        // Deep jewel tones — echoes the invitation's maroon/gold palette
+        // alongside the site's deep-space neon accents.
+        const colors = ['#e0b23c', '#ff2f76', '#8b2fff', '#2f6dff', '#0fae65', '#b1163f', '#ffe38b'];
+
+        function rand(a, b) { return a + Math.random() * (b - a); }
+        function pick(a) { return a[(Math.random() * a.length) | 0]; }
+        function easeInOutCubic(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+        function hexA(hex, alpha) {
+          const n = parseInt(hex.slice(1), 16);
+          return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + alpha + ')';
+        }
+
+        // ---- Formation generators, unit space, remapped to canvas on resize ----
+        function heartPoints(n) {
+          const pts = [];
+          for (let i = 0; i < n; i++) {
+            const t = (i / n) * Math.PI * 2;
+            const x = 16 * Math.pow(Math.sin(t), 3);
+            const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+            pts.push({ x: x / 18, y: y / 18 });
+          }
+          return pts;
+        }
+
+        function infinityPoints(n) {
+          const pts = [];
+          for (let i = 0; i < n; i++) {
+            const t = (i / n) * Math.PI * 2;
+            const s = Math.sin(t);
+            const denom = 1 + s * s;
+            pts.push({ x: Math.cos(t) / denom, y: (s * Math.cos(t) / denom) * 1.15 });
+          }
+          return pts;
+        }
+
+        function ringsPoints(n) {
+          const pts = [];
+          const half = Math.floor(n / 2);
+          for (let i = 0; i < half; i++) {
+            const t = (i / half) * Math.PI * 2;
+            pts.push({ x: -0.32 + Math.cos(t) * .5, y: Math.sin(t) * .5 });
+          }
+          for (let i = 0; i < n - half; i++) {
+            const t = (i / (n - half)) * Math.PI * 2;
+            pts.push({ x: 0.32 + Math.cos(t) * .5, y: Math.sin(t) * .5 });
+          }
+          return pts;
+        }
+
+        let formations = [];
+        function buildFormations() {
+          formations = [heartPoints(COUNT), infinityPoints(COUNT), ringsPoints(COUNT)];
+        }
+
+        function resize() {
+          // Fixed viewport-sized canvas (like the site's #bg-canvas), so
+          // the formation keeps drifting behind every section, not just the hero.
+          W = Math.max(1, window.innerWidth);
+          H = Math.max(1, window.innerHeight);
+          DPR = Math.min(window.devicePixelRatio || 1, 2);
+          canvas.width = Math.round(W * DPR);
+          canvas.height = Math.round(H * DPR);
+          canvas.style.width = W + 'px';
+          canvas.style.height = H + 'px';
+          ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+          buildFormations();
+        }
+
+        let drones = [];
+        function initDrones() {
+          drones = [];
+          for (let i = 0; i < COUNT; i++) {
+            drones.push({
+              fromX: 0, fromY: 0, toX: 0, toY: 0, x: 0, y: 0,
+              color: pick(colors),
+              size: rand(1.7, 2.9),
+              phase: rand(0, Math.PI * 2),
+              twinkleSpeed: rand(.9, 1.8)
+            });
+          }
+        }
+
+        let formationIndex = 0;
+        let morphStart = 0;
+        const HOLD = 5200;
+        const MORPH = 2600;
+        let nextMorph = HOLD;
+
+        function toCanvasSpace(p) {
+          const cx = W * .5, cy = H * .40;
+          const scale = Math.min(W, H) * .30;
+          return { x: cx + p.x * scale, y: cy + p.y * scale };
+        }
+
+        function setTargets(idx) {
+          const shape = formations[idx];
+          for (let i = 0; i < drones.length; i++) {
+            const d = drones[i];
+            d.fromX = d.x; d.fromY = d.y;
+            const p = toCanvasSpace(shape[i] || shape[0]);
+            d.toX = p.x; d.toY = p.y;
+          }
+        }
+
+        function frame(now) {
+          if (!running) return;
+          ctx.clearRect(0, 0, W, H);
+
+          if (now >= nextMorph) {
+            formationIndex = (formationIndex + 1) % formations.length;
+            setTargets(formationIndex);
+            morphStart = now;
+            nextMorph = now + HOLD + MORPH;
+          }
+
+          const morphT = Math.min(1, Math.max(0, (now - morphStart) / MORPH));
+          const e = easeInOutCubic(morphT);
+
+          for (let i = 0; i < drones.length; i++) {
+            const d = drones[i];
+            const jx = Math.sin(now * .0012 * d.twinkleSpeed + d.phase) * 1.6;
+            const jy = Math.cos(now * .0010 * d.twinkleSpeed + d.phase) * 1.6;
+            d.x = d.fromX + (d.toX - d.fromX) * e + jx;
+            d.y = d.fromY + (d.toY - d.fromY) * e + jy;
+
+            const tw = .65 + .35 * Math.sin(now * .0025 * d.twinkleSpeed + d.phase);
+
+            const g = ctx.createRadialGradient(d.x, d.y, 0, d.x, d.y, d.size * 6.5);
+            g.addColorStop(0, hexA(d.color, tw));
+            g.addColorStop(.4, hexA(d.color, .5 * tw));
+            g.addColorStop(1, hexA(d.color, 0));
+            ctx.fillStyle = g;
+            ctx.beginPath();
+            ctx.arc(d.x, d.y, d.size * 6.5, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = hexA('#ffffff', .95 * tw);
+            ctx.beginPath();
+            ctx.arc(d.x, d.y, d.size * .7, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          raf = requestAnimationFrame(frame);
+        }
+
+        resize();
+        initDrones();
+        setTargets(0);
+        // Snap straight into the first formation instead of morphing from (0,0).
+        for (let i = 0; i < drones.length; i++) {
+          const d = drones[i];
+          d.x = d.toX; d.y = d.toY; d.fromX = d.toX; d.fromY = d.toY;
+        }
+        morphStart = performance.now() - MORPH;
+        nextMorph = performance.now() + HOLD;
+
+        window.addEventListener('resize', function () {
+          resize();
+          setTargets(formationIndex);
+        }, { passive: true });
+
+        document.addEventListener('visibilitychange', function () {
+          if (document.hidden) {
+            running = false;
+            if (raf) cancelAnimationFrame(raf);
+          } else if (!running) {
+            running = true;
+            raf = requestAnimationFrame(frame);
+          }
+        });
+
+        // Reduced motion: draw the first formation once, statically, and stop.
+        if (reduceMotion) {
+          running = true;
+          frame(performance.now());
+          running = false;
+          return;
+        }
+
+        raf = requestAnimationFrame(frame);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initWeddingDrones, { once: true });
+      } else {
+        initWeddingDrones();
+      }
+    })();
+  </script>
+
 
 </body>
 
