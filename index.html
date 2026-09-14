@@ -74,8 +74,31 @@
       height: 100vh;
       z-index: -2;
       display: block;
-      background: var(--navy);
+      background:
+        radial-gradient(ellipse 120% 85% at 50% -15%, rgba(90, 16, 38, 0.55) 0%, transparent 62%),
+        radial-gradient(ellipse 110% 85% at 100% 118%, rgba(58, 10, 24, 0.6) 0%, transparent 58%),
+        radial-gradient(ellipse 90% 70% at -10% 100%, rgba(120, 84, 20, 0.22) 0%, transparent 55%),
+        linear-gradient(165deg, #170a1e 0%, #0e0a1c 40%, var(--navy) 100%);
       transition: filter 1.2s ease;
+    }
+
+    /* Fixed royal backdrop: soft gold/maroon corner glows + faint jewel-dot
+       texture, sitting above the starfield canvas and below the neon blobs.
+       Purely decorative — pointer-events off, very low opacity. */
+    .bg-royal {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 1;
+      will-change: transform;
+      transform: translateZ(0);
+      background:
+        radial-gradient(ellipse 65% 55% at 4% -6%, rgba(224, 178, 60, 0.22) 0%, transparent 60%),
+        radial-gradient(ellipse 58% 50% at 98% 2%, rgba(167, 139, 250, 0.16) 0%, transparent 62%),
+        radial-gradient(ellipse 65% 55% at 102% 106%, rgba(224, 178, 60, 0.20) 0%, transparent 62%),
+        radial-gradient(ellipse 58% 50% at -6% 102%, rgba(255, 95, 176, 0.12) 0%, transparent 60%),
+        repeating-radial-gradient(circle at 0 0, rgba(224, 178, 60, 0.08) 0, rgba(224, 178, 60, 0.08) 1.4px, transparent 1.4px, transparent 42px);
     }
 
     .bg-blobs {
@@ -288,6 +311,106 @@
       }
     }
 
+    /* ── Solar system: planets orbiting on the existing rings ── */
+
+    /* Explicit, responsive ring sizes (scale by viewport so they never overflow small screens) */
+    .orbit.orbit-outer {
+      width: min(720px, 92vw);
+      height: min(720px, 92vw);
+    }
+
+    .orbit.orbit-mid {
+      width: min(520px, 74vw);
+      height: min(520px, 74vw);
+      animation-delay: 1.8s;
+      border-color: rgba(255, 95, 176, 0.09);
+    }
+
+    .orbit.orbit-inner {
+      width: min(360px, 56vw);
+      height: min(360px, 56vw);
+      animation-delay: 3.5s;
+    }
+
+    /* Wrapper that continuously rotates a planet around its ring's edge */
+    .orbit-spin {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: solarSpin linear infinite;
+    }
+
+    @keyframes solarSpin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .orbit-outer .orbit-spin {
+      animation-duration: 16s;
+    }
+
+    .orbit-mid .orbit-spin {
+      animation-duration: 10s;
+      animation-direction: reverse;
+    }
+
+    .orbit-inner .orbit-spin {
+      animation-duration: 6s;
+    }
+
+    .planet {
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .planet-outer {
+      width: 14px;
+      height: 14px;
+      background: radial-gradient(circle at 32% 30%, #ffe6b0, var(--champagne) 60%, #7a5c22 100%);
+      box-shadow: 0 0 10px rgba(224, 178, 60, 0.8), 0 0 22px rgba(224, 178, 60, 0.4);
+    }
+
+    /* Saturn-style tilted ring around the outer planet */
+    .planet-outer::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 30px;
+      height: 10px;
+      transform: translate(-50%, -50%) rotate(-24deg);
+      border-radius: 50%;
+      border: 1.4px solid rgba(240, 214, 158, 0.85);
+      box-shadow:
+        0 0 4px rgba(224, 178, 60, 0.5),
+        inset 0 0 3px rgba(255, 255, 255, 0.3);
+      pointer-events: none;
+    }
+
+    .planet-mid {
+      width: 10px;
+      height: 10px;
+      background: radial-gradient(circle at 32% 30%, #dfd2ff, var(--violet) 60%, #4b3585 100%);
+      box-shadow: 0 0 8px rgba(167, 139, 250, 0.8), 0 0 18px rgba(167, 139, 250, 0.4);
+    }
+
+    .planet-inner {
+      width: 8px;
+      height: 8px;
+      background: radial-gradient(circle at 32% 30%, #ffd0e8, var(--blush) 60%, #8a1f57 100%);
+      box-shadow: 0 0 7px rgba(255, 95, 176, 0.85), 0 0 16px rgba(255, 95, 176, 0.4);
+    }
+
     /* Star particles */
     .stars {
       position: absolute;
@@ -467,6 +590,8 @@
       inset: 0;
       align-items: center;
       justify-content: center;
+      border-radius: 50%;
+      overflow: hidden;
     }
 
     .hero-eyebrow {
@@ -488,7 +613,7 @@
       align-items: center;
       justify-content: center;
       gap: 12px;
-      margin: 0 auto 24px;
+      margin: 0 auto 10px;
       animation: riseIn 1s ease 0.4s both;
       animation-play-state: paused;
     }
@@ -508,11 +633,17 @@
     /* Couple names — the hero title, written in letter-by-letter */
     .couple-names {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(32px, 8vw, 62px);
+      font-size: clamp(26px, 7vw, 62px);
       font-weight: 600;
       line-height: 1.05;
       color: var(--white);
       letter-spacing: -0.5px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: center;
+      column-gap: 0.24em;
+      row-gap: 6px;
     }
 
     .name-a {
@@ -548,13 +679,12 @@
     }
 
     .name-amp {
-      display: block;
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 300;
-      font-size: 0.48em;
+      font-size: 0.4em;
       color: var(--champagne);
       letter-spacing: normal;
-      margin: 10px 0 8px;
+      margin: 0;
       animation: riseIn 1s ease 0.95s both;
       animation-play-state: paused;
       text-shadow: 0 0 18px var(--champ-glow);
@@ -653,7 +783,7 @@
       opacity: 0;
       transform: perspective(1000px) rotateX(16deg) translateY(52px) scale(0.94);
       transform-origin: 50% 100%;
-      transition: opacity 0.9s cubic-bezier(.22, .68, 0, 1.05), transform 0.9s cubic-bezier(.22, .68, 0, 1.05);
+      transition: opacity 0.55s cubic-bezier(.22, .68, 0, 1.05), transform 0.55s cubic-bezier(.22, .68, 0, 1.05);
       will-change: transform, opacity;
     }
 
@@ -674,11 +804,16 @@
     }
 
     .bg-dark {
-      background: rgba(3, 4, 10, 0.5);
+      background:
+        radial-gradient(ellipse 90% 70% at 15% 0%, rgba(224, 178, 60, 0.10), transparent 55%),
+        radial-gradient(ellipse 90% 70% at 85% 100%, rgba(90, 16, 38, 0.42), transparent 60%),
+        rgba(9, 6, 16, 0.4);
     }
 
     .bg-ivory {
-      background: transparent;
+      background:
+        radial-gradient(ellipse 70% 60% at 10% 0%, rgba(224, 178, 60, 0.09), transparent 55%),
+        radial-gradient(ellipse 70% 60% at 92% 100%, rgba(167, 139, 250, 0.08), transparent 58%);
     }
 
     /* ═══════════════════════════════════════
@@ -831,7 +966,7 @@
       align-items: center;
       justify-content: center;
       gap: 12px;
-      margin: 16px auto 42px;
+      margin: 16px auto 18px;
     }
 
     .s-rule span {
@@ -1197,6 +1332,7 @@
       opacity: 0;
       transform: translateY(15px);
       transition: opacity 0.5s ease, transform 0.5s ease;
+      padding: 0 clamp(8px, 3.5vw, 26px);
     }
 
     .fest-side-container.active {
@@ -1267,7 +1403,7 @@
       background-image: var(--grain), radial-gradient(130% 160% at 12% -15%, rgba(255, 255, 255, 0.06), transparent 55%);
       background-size: 180px 180px, auto;
       background-blend-mode: overlay, normal;
-      background-color: rgba(8, 10, 24, 0.74);
+      background-color: rgba(8, 10, 24, 0.56);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       /* outer gilded border */
@@ -1361,6 +1497,13 @@
       font-size: 22px;
       flex-shrink: 0;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.32), inset 0 0 0 3px rgba(0, 0, 0, 0.16);
+    }
+
+    .fest-icon-badge svg {
+      width: 23px;
+      height: 23px;
+      stroke: rgba(255, 255, 255, 0.94);
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
     }
 
     .fest-icon-badge::before {
@@ -2095,6 +2238,23 @@
       filter: drop-shadow(0 0 6px rgba(201, 170, 114, 0.4));
     }
 
+    /* Compact header row: chapter label + icon share one line */
+    .sc-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .sc-head .sc-chapter,
+    .sc-head .sc-icon {
+      margin-bottom: 0;
+    }
+
+    .sc-head .sc-icon {
+      font-size: 20px;
+    }
+
     .sc-title {
       font-family: 'Syne', sans-serif;
       font-size: 20px;
@@ -2111,6 +2271,20 @@
       display: block;
       margin-bottom: 10px;
       letter-spacing: 0.3px;
+    }
+
+    /* Compact title row: English title + Hindi title share one line */
+    .sc-title-row {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .sc-title-row .sc-title,
+    .sc-title-row .sc-title-hindi {
+      margin-bottom: 0;
     }
 
     .sc-txt {
@@ -2572,7 +2746,7 @@
     }
 
     /* ═══════════════════════════════════════
-   BRIDE & GROOM INTRO
+   BRIDE & GROOM INTRO — modern card redesign
 ═══════════════════════════════════════ */
     .intro-grid {
       display: grid;
@@ -2580,119 +2754,274 @@
       gap: 0 28px;
       align-items: center;
       margin-top: 8px;
+      padding: 0 clamp(10px, 4vw, 30px);
     }
 
     .intro-card {
-      border-radius: 22px;
-      padding: 36px 28px 30px;
+      border-radius: 26px;
+      padding: 28px 20px 22px;
       text-align: center;
       position: relative;
       overflow: hidden;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: transform 0.4s cubic-bezier(.22, .68, 0, 1), box-shadow 0.4s ease;
+    }
+
+    /* Hide the ornate scalloped-corner flourishes here for a cleaner, modern face
+       (the gold shimmer edge from .card-frame is kept — see below) */
+    .intro-card .cf-corner,
+    .intro-card .cf-top-bud {
+      display: none;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .intro-card:hover {
+        transform: translateY(-6px);
+      }
+    }
+
+    /* Slim gradient accent bar along the top edge of each card */
+    .intro-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 14%;
+      right: 14%;
+      height: 3px;
+      border-radius: 0 0 4px 4px;
+      z-index: 1;
     }
 
     .intro-card.mr {
-      background-image: var(--grain), linear-gradient(160deg, rgba(34, 229, 255, 0.09), rgba(10, 13, 28, 0.5));
-      background-size: 180px 180px, auto;
-      background-blend-mode: overlay, normal;
-      border: 1px solid rgba(34, 229, 255, 0.3);
-      box-shadow: 0 14px 46px rgba(34, 229, 255, 0.14);
+      background: linear-gradient(165deg, rgba(224, 178, 60, 0.09), rgba(12, 14, 30, 0.38) 55%, rgba(12, 14, 30, 0.46));
+      border: 1px solid rgba(224, 178, 60, 0.28) !important;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(224, 178, 60, 0.05) inset;
+    }
+
+    .intro-card.mr::after {
+      background: linear-gradient(90deg, transparent, var(--champagne), var(--gold-soft), var(--champagne), transparent);
     }
 
     .intro-card.mrs {
-      background-image: var(--grain), linear-gradient(160deg, rgba(255, 95, 176, 0.10), rgba(10, 13, 28, 0.5));
-      background-size: 180px 180px, auto;
-      background-blend-mode: overlay, normal;
-      border: 1px solid rgba(255, 95, 176, 0.32);
-      box-shadow: 0 14px 46px rgba(255, 95, 176, 0.14);
+      background: linear-gradient(165deg, rgba(255, 95, 176, 0.09), rgba(12, 14, 30, 0.38) 55%, rgba(12, 14, 30, 0.46));
+      border: 1px solid rgba(255, 95, 176, 0.28) !important;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(255, 95, 176, 0.05) inset;
     }
 
+    .intro-card.mrs::after {
+      background: linear-gradient(90deg, transparent, var(--blush), #ffb6dd, var(--blush), transparent);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .intro-card.mr:hover {
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), 0 0 32px rgba(224, 178, 60, 0.22);
+      }
+
+      .intro-card.mrs:hover {
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), 0 0 32px rgba(255, 95, 176, 0.22);
+      }
+    }
+
+    /* Photo — gradient ring + soft breathing glow + small emoji badge */
     .intro-photo {
-      width: 118px;
-      height: 118px;
+      width: 116px;
+      height: 116px;
       border-radius: 50%;
-      overflow: hidden;
-      margin: 0 auto 20px;
+      overflow: visible;
+      margin: 0 auto 16px;
       position: relative;
+      padding: 2.5px;
     }
 
-    .intro-card.mr .intro-photo {
-      border: 2px solid rgba(34, 229, 255, 0.55);
-      box-shadow: 0 0 30px rgba(34, 229, 255, 0.25);
+    .intro-photo::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      z-index: 0;
+      animation: photoRingBreathe 3.4s ease-in-out infinite;
     }
 
-    .intro-card.mrs .intro-photo {
-      border: 2px solid rgba(255, 95, 176, 0.55);
-      box-shadow: 0 0 30px rgba(255, 95, 176, 0.25);
+    .intro-card.mr .intro-photo::before {
+      background: conic-gradient(from 180deg, var(--champagne), var(--gold-soft), var(--champagne), var(--gold), var(--champagne));
+      box-shadow: 0 0 22px rgba(224, 178, 60, 0.35);
+    }
+
+    .intro-card.mrs .intro-photo::before {
+      background: conic-gradient(from 180deg, var(--blush), #ffc4e4, var(--blush), #ff8fc9, var(--blush));
+      box-shadow: 0 0 22px rgba(255, 95, 176, 0.35);
+    }
+
+    @keyframes photoRingBreathe {
+
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 0.9;
+      }
+
+      50% {
+        transform: scale(1.045);
+        opacity: 1;
+      }
     }
 
     .intro-photo img {
+      position: relative;
+      z-index: 1;
       width: 100%;
       height: 100%;
+      border-radius: 50%;
       object-fit: cover;
       object-position: top;
       display: block;
+      border: 2.5px solid rgba(10, 8, 20, 0.9);
     }
 
+    .intro-photo-badge {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      z-index: 2;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      background: radial-gradient(circle at 32% 30%, #1a1626, #0a0814);
+      border: 1.5px solid rgba(224, 178, 60, 0.5);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .intro-card.mrs .intro-photo-badge {
+      border-color: rgba(255, 95, 176, 0.55);
+    }
+
+    /* Role — small pill chip instead of bare uppercase text */
     .intro-role {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 10px;
-      letter-spacing: 4px;
+      font-size: 9.5px;
+      letter-spacing: 3px;
       text-transform: uppercase;
-      opacity: 0.7;
-      margin-bottom: 6px;
+      padding: 5px 14px;
+      border-radius: 30px;
+      margin-bottom: 9px;
+    }
+
+    .intro-role::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
     }
 
     .intro-card.mr .intro-role {
       color: var(--champagne);
+      background: rgba(224, 178, 60, 0.08);
+      border: 1px solid rgba(224, 178, 60, 0.28);
+    }
+
+    .intro-card.mr .intro-role::before {
+      background: var(--champagne);
+      box-shadow: 0 0 6px rgba(224, 178, 60, 0.8);
     }
 
     .intro-card.mrs .intro-role {
       color: var(--blush);
+      background: rgba(255, 95, 176, 0.08);
+      border: 1px solid rgba(255, 95, 176, 0.28);
     }
 
+    .intro-card.mrs .intro-role::before {
+      background: var(--blush);
+      box-shadow: 0 0 6px rgba(255, 95, 176, 0.8);
+    }
+
+    /* Name — bold gradient text for a premium modern touch */
     .intro-name {
       font-family: 'Syne', sans-serif;
-      font-size: 30px;
-      font-weight: 400;
-      color: var(--dark-text);
-      margin-bottom: 14px;
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: 0.2px;
     }
 
+    .intro-card.mr .intro-name {
+      background: linear-gradient(135deg, #fff6da, var(--gold-soft) 45%, var(--champagne));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .intro-card.mrs .intro-name {
+      background: linear-gradient(135deg, #ffe1f0, #ffb6dd 45%, var(--blush));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Bio — editorial quote styling */
     .intro-bio {
+      position: relative;
       font-family: 'Inter', sans-serif;
       font-size: 13.5px;
       color: var(--muted-text);
-      line-height: 1.75;
-      margin-bottom: 18px;
+      line-height: 1.7;
+      margin: 0 auto 16px;
+      max-width: 300px;
     }
 
     .intro-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 9px;
       justify-content: center;
     }
 
     .intro-tag {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 10px;
-      letter-spacing: 1px;
-      padding: 6px 12px;
+      letter-spacing: 0.8px;
+      padding: 7px 14px;
       border-radius: 30px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .intro-tag:hover {
+        transform: translateY(-2px);
+      }
     }
 
     .intro-card.mr .intro-tag {
       color: var(--champagne);
-      border: 1px solid rgba(34, 229, 255, 0.3);
-      background: rgba(34, 229, 255, 0.06);
+      border: 1px solid rgba(224, 178, 60, 0.32);
+      background: rgba(224, 178, 60, 0.07);
+    }
+
+    .intro-card.mr .intro-tag:hover {
+      box-shadow: 0 6px 16px rgba(224, 178, 60, 0.22);
     }
 
     .intro-card.mrs .intro-tag {
       color: var(--blush);
-      border: 1px solid rgba(255, 95, 176, 0.3);
-      background: rgba(255, 95, 176, 0.06);
+      border: 1px solid rgba(255, 95, 176, 0.32);
+      background: rgba(255, 95, 176, 0.07);
     }
 
+    .intro-card.mrs .intro-tag:hover {
+      box-shadow: 0 6px 16px rgba(255, 95, 176, 0.22);
+    }
+
+    /* Divider heart — real heartbeat: scale pulse + colour shift */
     .intro-divider {
       display: flex;
       flex-direction: column;
@@ -2703,21 +3032,58 @@
     .intro-divider .id-line {
       width: 1px;
       height: 44px;
-      background: linear-gradient(to bottom, transparent, rgba(167, 139, 250, 0.5));
+      background: linear-gradient(to bottom, transparent, rgba(255, 95, 176, 0.45));
     }
 
     .intro-divider .id-gem {
-      width: 46px;
-      height: 46px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
-      color: var(--violet);
-      background: radial-gradient(circle, rgba(167, 139, 250, 0.18), transparent 70%);
-      border: 1px solid rgba(167, 139, 250, 0.4);
-      animation: gatePulse 3s ease-in-out infinite;
+      font-size: 19px;
+      background: radial-gradient(circle, rgba(255, 95, 176, 0.16), transparent 70%);
+      border: 1px solid rgba(255, 95, 176, 0.4);
+      animation: heartBeat 1.8s ease-in-out infinite, heartGlow 1.8s ease-in-out infinite;
+    }
+
+    @keyframes heartBeat {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      14% {
+        transform: scale(1.22);
+      }
+
+      28% {
+        transform: scale(0.96);
+      }
+
+      42% {
+        transform: scale(1.14);
+      }
+
+      60% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes heartGlow {
+
+      0%,
+      100% {
+        color: var(--blush);
+        box-shadow: 0 0 10px rgba(255, 95, 176, 0.35);
+      }
+
+      50% {
+        color: var(--gold-soft);
+        box-shadow: 0 0 20px rgba(224, 178, 60, 0.55);
+      }
     }
 
     /* ═══════════════════════════════════════
@@ -2829,35 +3195,48 @@
       width: 118px;
       height: 118px;
       border-radius: 50%;
-      overflow: hidden;
+      overflow: visible;
       flex-shrink: 0;
       margin: 0 auto;
-      border: 2px solid rgba(224, 178, 60, 0.45);
-      box-shadow: 0 0 18px rgba(224, 178, 60, 0.2);
+      padding: 2.5px;
     }
 
-    .family-side:first-child .fam-photo {
-      border-color: rgba(34, 229, 255, 0.55);
-      box-shadow: 0 0 30px rgba(34, 229, 255, 0.25);
+    .fam-photo::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      z-index: 0;
+      animation: photoRingBreathe 3.4s ease-in-out infinite;
     }
 
-    .family-side:last-child .fam-photo {
-      border-color: rgba(255, 95, 176, 0.55);
-      box-shadow: 0 0 30px rgba(255, 95, 176, 0.25);
+    .family-side.groom-parents .fam-photo::before {
+      background: conic-gradient(from 180deg, #22e5ff, #a6f2ff, #22e5ff, #5ad2ff, #22e5ff);
+      box-shadow: 0 0 22px rgba(34, 229, 255, 0.35);
+    }
+
+    .family-side.bride-parents .fam-photo::before {
+      background: conic-gradient(from 180deg, var(--blush), #ffc4e4, var(--blush), #ff8fc9, var(--blush));
+      box-shadow: 0 0 22px rgba(255, 95, 176, 0.35);
     }
 
     .fam-photo img {
+      position: relative;
+      z-index: 1;
       width: 100%;
       height: 100%;
+      border-radius: 50%;
       object-fit: cover;
       object-position: top;
       display: block;
+      border: 2.5px solid rgba(10, 8, 20, 0.9);
     }
 
     .fam-photo .ph-fallback {
       font-size: 26px;
       color: var(--gold-soft);
       background: linear-gradient(160deg, rgba(74, 14, 31, 0.6), rgba(10, 3, 7, 0.7));
+      z-index: 1;
     }
 
     /* ═══════════════════════════════════════
@@ -2919,14 +3298,23 @@
       width: 118px;
       height: 118px;
       border-radius: 50%;
-      border: 2px dashed rgba(224, 178, 60, 0.32);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
       background: rgba(255, 255, 255, 0.03);
       position: relative;
-      overflow: hidden;
+      overflow: visible;
+      padding: 2.5px;
+    }
+
+    .fam-member-photo-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      z-index: 0;
+      animation: photoRingBreathe 3.4s ease-in-out infinite;
     }
 
     /* Only show the camera emoji when there's no real image inside */
@@ -2934,15 +3322,21 @@
       content: '📷';
       font-size: 22px;
       opacity: 0.45;
+      position: relative;
+      z-index: 1;
     }
 
     /* Image inside placeholder — constrain to circle just like .fam-member-photo img */
     .fam-member-photo-placeholder img {
+      position: relative;
+      z-index: 1;
       width: 100%;
       height: 100%;
+      border-radius: 50%;
       object-fit: cover;
       object-position: top;
       display: block;
+      border: 2.5px solid rgba(10, 8, 20, 0.9);
     }
 
     .fam-member-name {
@@ -2971,9 +3365,9 @@
       box-shadow: 0 0 30px rgba(34, 229, 255, 0.25);
     }
 
-    .fam-members-row.groom-members .fam-member-photo-placeholder {
-      border-color: rgba(34, 229, 255, 0.55);
-      box-shadow: 0 0 30px rgba(34, 229, 255, 0.18);
+    .fam-members-row.groom-members .fam-member-photo-placeholder::before {
+      background: conic-gradient(from 180deg, #22e5ff, #a6f2ff, #22e5ff, #5ad2ff, #22e5ff);
+      box-shadow: 0 0 20px rgba(34, 229, 255, 0.3);
     }
 
     .fam-members-row.groom-members .fam-member-rel {
@@ -2986,8 +3380,9 @@
       box-shadow: 0 0 30px rgba(255, 95, 176, 0.25);
     }
 
-    .fam-members-row.bride-members .fam-member-photo-placeholder {
-      border-color: rgba(255, 95, 176, 0.28);
+    .fam-members-row.bride-members .fam-member-photo-placeholder::before {
+      background: conic-gradient(from 180deg, var(--blush), #ffc4e4, var(--blush), #ff8fc9, var(--blush));
+      box-shadow: 0 0 20px rgba(255, 95, 176, 0.3);
     }
 
     .fam-members-row.bride-members .fam-member-rel {
@@ -3316,11 +3711,21 @@
       width: 100px;
       height: 100px;
       border-radius: 50%;
-      overflow: hidden;
+      overflow: visible;
       margin: 0 auto 12px;
-      border: 3px solid rgba(255, 193, 122, 0.55);
-      box-shadow: 0 8px 26px rgba(167, 139, 250, 0.28);
+      padding: 2.5px;
       transform: rotate(-4deg);
+    }
+
+    .kid-photo::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      z-index: 0;
+      animation: photoRingBreathe 3.4s ease-in-out infinite;
+      background: conic-gradient(from 180deg, #a78bfa, #ffc17a, #a78bfa, #ffe1a8, #a78bfa);
+      box-shadow: 0 8px 22px rgba(167, 139, 250, 0.32);
     }
 
     .kid-card:nth-child(even) .kid-photo {
@@ -3336,16 +3741,21 @@
     }
 
     .kid-photo img {
+      position: relative;
+      z-index: 1;
       width: 100%;
       height: 100%;
+      border-radius: 50%;
       object-fit: cover;
       object-position: top;
       display: block;
+      border: 2.5px solid rgba(10, 8, 20, 0.9);
     }
 
     .kid-photo .ph-fallback {
       font-size: 40px;
       background: linear-gradient(160deg, rgba(167, 139, 250, 0.22), rgba(255, 193, 122, 0.16));
+      z-index: 1;
     }
 
     .kid-name {
@@ -3896,19 +4306,16 @@
       transform-origin: 50% 100%;
       transform: perspective(1200px) rotateX(22deg) translateY(60px) scale(0.93);
       transition:
-        opacity 0.85s cubic-bezier(.22, .68, 0, 1.05),
-        transform 0.85s cubic-bezier(.22, .68, 0, 1.05),
-        filter 0.85s ease,
-        box-shadow 0.85s ease;
+        opacity 0.45s cubic-bezier(.22, .68, 0, 1.05),
+        transform 0.45s cubic-bezier(.22, .68, 0, 1.05),
+        box-shadow 0.45s ease;
       will-change: transform, opacity;
-      filter: brightness(0.75) blur(1px);
       box-shadow: 0 40px 80px rgba(0, 0, 0, 0);
     }
 
     .reveal.on {
       opacity: 1;
       transform: perspective(1200px) rotateX(0deg) translateY(0) scale(1);
-      filter: brightness(1) blur(0px);
       box-shadow: 0 12px 60px rgba(0, 0, 0, 0.25);
     }
 
@@ -4017,7 +4424,7 @@
       /* ── Meet the couple ── */
       .intro-grid {
         grid-template-columns: 1fr;
-        gap: 22px 0;
+        gap: 14px 0;
       }
 
       .intro-divider {
@@ -4034,12 +4441,12 @@
       }
 
       .intro-photo {
-        width: 100px;
-        height: 100px;
+        width: 96px;
+        height: 96px;
       }
 
       .intro-name {
-        font-size: 26px;
+        font-size: 24px;
       }
 
       /* ── Family grid — single column ── */
@@ -4210,12 +4617,12 @@
       /* ── Date strip ── */
       /* ── Meet the couple ── */
       .intro-card {
-        padding: 26px 18px 22px;
+        padding: 22px 16px 18px;
       }
 
       .intro-photo {
-        width: 116px;
-        height: 116px;
+        width: 100px;
+        height: 100px;
       }
 
       .intro-bio {
@@ -4608,7 +5015,7 @@
       }
 
       .s-rule {
-        margin: 12px auto 32px;
+        margin: 12px auto 14px;
       }
 
       /* ── Hero ── */
@@ -4674,12 +5081,12 @@
 
       /* ── Meet the couple ── */
       .intro-card {
-        padding: 22px 16px 18px;
+        padding: 18px 14px 16px;
       }
 
       .intro-photo {
-        width: 116px;
-        height: 116px;
+        width: 96px;
+        height: 96px;
       }
 
       .intro-name {
@@ -8374,16 +8781,19 @@
     }
 
     section[data-section="festivities"] .fest-tab-btn::before {
-      font-size: 15px;
-      line-height: 1;
+      content: none;
     }
 
-    section[data-section="festivities"] .fest-tab-btn[data-side="groom"]::before {
-      content: '🤵';
+    section[data-section="festivities"] .fest-tab-icon {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      color: var(--champagne, #e0b23c);
+      opacity: 0.85;
     }
 
-    section[data-section="festivities"] .fest-tab-btn[data-side="bride"]::before {
-      content: '👰';
+    section[data-section="festivities"] .fest-tab-btn.active .fest-tab-icon {
+      opacity: 1;
     }
 
     section[data-section="festivities"] .fest-tab-btn.active {
@@ -8551,6 +8961,7 @@
 
   <!-- Persistent 3D backdrop — sits fixed behind every section, reacts to scroll + touch/pointer -->
   <canvas id="bg-canvas"></canvas>
+  <div class="bg-royal"></div>
   <div class="bg-blobs"><i></i></div>
 
   <!-- Entry gate: unlocks sound (browser policy) and starts the choreographed reveal -->
@@ -8686,9 +9097,16 @@
     <canvas id="wedding-fireworks" class="wedding-fireworks" aria-hidden="true"></canvas>
     <!-- Occasional cinematic thunderbolt lightning, behind all invitation content -->
     <canvas id="wedding-lightning" class="wedding-lightning" aria-hidden="true"></canvas>
-    <div class="orbit"></div>
-    <div class="orbit"></div>
-    <div class="orbit"></div>
+    <!-- Solar system: orbiting planets, centered behind the hero content -->
+    <div class="orbit orbit-outer">
+      <div class="orbit-spin"><span class="planet planet-outer"></span></div>
+    </div>
+    <div class="orbit orbit-mid">
+      <div class="orbit-spin"><span class="planet planet-mid"></span></div>
+    </div>
+    <div class="orbit orbit-inner">
+      <div class="orbit-spin"><span class="planet planet-inner"></span></div>
+    </div>
     <div class="stars" id="star-field"></div>
     <div class="petals-wrap" id="petal-field"></div>
 
@@ -8751,7 +9169,8 @@
           <div class="ph-fallback divine-fallback">&#x0950;</div>
         </div>
         <p class="divine-text">श्री गणेशाय नमः</p>
-        <p class="shloka-inline" style="font-size:clamp(16.5px,4.2vw,19.5px);margin-top:6px;opacity:0.72;">
+        <p class="shloka-inline"
+          style="font-size:clamp(17px,4.4vw,20.5px);margin-top:8px;color:rgba(240,225,190,0.95);opacity:1;">
           वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ।<br />
           निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥
         </p>
@@ -8776,7 +9195,7 @@
       </div>
       <p class="hero-eyebrow">Wedding Invitation</p>
       <p class="s-eyebrow-hindi"
-        style="font-size:clamp(16.5px,3.9vw,21px);margin-top:4px;letter-spacing:1px;opacity:0.82;">
+        style="font-size:clamp(17px,4.2vw,22px);margin-top:4px;letter-spacing:1px;color:rgba(224,178,60,0.95);opacity:1;">
         ✦ &nbsp; शुभ विवाह निमंत्रण &nbsp; ✦
       </p>
 
@@ -8800,7 +9219,7 @@
 
       <p class="hero-tagline" id="hero-tagline">Joyfully invite you to celebrate our Wedding</p>
       <p class="s-eyebrow-hindi"
-        style="font-size:clamp(15px,3.6vw,19.5px);margin-top:8px;opacity:0.6;letter-spacing:0.5px;">
+        style="font-size:clamp(16px,3.8vw,20.5px);margin-top:8px;color:rgba(240,225,190,0.9);opacity:1;letter-spacing:0.5px;">
         सप्तपदी के बंधन में बँधने, हम आपको आमंत्रित करते हैं
       </p>
     </div>
@@ -9070,9 +9489,20 @@
     <!-- Beautiful tab selector -->
     <div class="fest-tabs">
       <button class="fest-tab-btn active" data-side="groom" type="button">
+        <svg class="fest-tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="7.2" r="3.4" />
+          <path d="M5 20c0-4.4 3.1-7 7-7s7 2.6 7 7" />
+        </svg>
         <span>वर पक्ष (Groom)</span>
       </button>
       <button class="fest-tab-btn" data-side="bride" type="button">
+        <svg class="fest-tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="7.6" r="3.2" />
+          <path d="M6.4 4.6C6.4 2.4 9 1 12 1s5.6 1.4 5.6 3.6" />
+          <path d="M5 20c0-4.4 3.1-7 7-7s7 2.6 7 7" />
+        </svg>
         <span>वधू पक्ष (Bride)</span>
       </button>
     </div>
@@ -9094,7 +9524,7 @@
         <div class="fest-card ev-haldi reveal on">
           <div class="fest-banner">
             <div class="fest-banner-left">
-              <div class="fest-icon-badge">💛</div>
+              <div class="fest-icon-badge">🌼</div>
               <div>
                 <p class="fest-ev-name">हल्दी</p>
                 <p class="fest-ev-sub">Day One · Turmeric Ceremony</p>
@@ -9163,7 +9593,7 @@
         <div class="fest-card ev-wedding reveal on">
           <div class="fest-banner">
             <div class="fest-banner-left">
-              <div class="fest-icon-badge">💐</div>
+              <div class="fest-icon-badge">🐎</div>
               <div>
                 <p class="fest-ev-name">बारात</p>
                 <p class="fest-ev-sub">Day Four · Baraat Assembly</p>
@@ -9193,7 +9623,7 @@
         <div class="fest-card ev-reception reveal on">
           <div class="fest-banner">
             <div class="fest-banner-left">
-              <div class="fest-icon-badge">🥂</div>
+              <div class="fest-icon-badge">🍽️</div>
               <div>
                 <p class="fest-ev-name">बहुभोज🌸</p>
                 <p class="fest-ev-sub">Day Five · Celebration Feast</p>
@@ -9229,7 +9659,7 @@
         <div class="fest-card ev-haldi reveal on">
           <div class="fest-banner">
             <div class="fest-banner-left">
-              <div class="fest-icon-badge">💛</div>
+              <div class="fest-icon-badge">🌼</div>
               <div>
                 <p class="fest-ev-name">हल्दी</p>
                 <p class="fest-ev-sub">Turmeric Ceremony</p>
@@ -9298,7 +9728,7 @@
         <div class="fest-card ev-wedding reveal on">
           <div class="fest-banner">
             <div class="fest-banner-left">
-              <div class="fest-icon-badge">👰</div>
+              <div class="fest-icon-badge">🔥</div>
               <div>
                 <p class="fest-ev-name">विवाह</p>
                 <p class="fest-ev-sub">Baraat Welcoming &amp; Pheras</p>
@@ -9321,7 +9751,7 @@
         <div class="fest-card ev-reception reveal on">
           <div class="fest-banner">
             <div class="fest-banner-left">
-              <div class="fest-icon-badge">💖</div>
+              <div class="fest-icon-badge">💞</div>
               <div>
                 <p class="fest-ev-name">विदाई</p>
                 <p class="fest-ev-sub">Farewell Ceremony</p>
@@ -9384,8 +9814,6 @@
 ════════════════════════════════ -->
   <section class="gsap-section" data-section="intro">
     <img class="meet-couple-floral-border" alt="" aria-hidden="true" src="assets/meet-the-couple-border.jpg">
-    <p class="s-eyebrow">Two Souls, One Story</p>
-    <span class="s-eyebrow-hindi">दो आत्माएँ, एक कहानी</span>
     <h2 class="s-title">Meet The Couple</h2>
     <div class="s-rule"><span></span><em>◆</em><span></span></div>
 
@@ -9414,7 +9842,8 @@
           <circle cx="22" cy="24" r="2.5" fill="rgba(224,178,60,0.85)" />
           <circle cx="26" cy="26" r="3" fill="rgba(201,170,114,0.95)" />
         </svg>
-        <div class="intro-photo"><img src="aman-groom.jpg" alt="Aman" /></div>
+        <div class="intro-photo"><img src="aman-groom.jpg" alt="Aman" /><span class="intro-photo-badge"
+            aria-hidden="true">💍</span></div>
         <p class="intro-role">The Groom</p>
         <h3 class="intro-name">Aman</h3>
         <p class="intro-bio">तुम मेरी धड़कन, मैं तुम्हारी जान बन जाऊँ, इस जन्म ही नहीं, हर जन्म तुम्हारा साथ निभाऊँ। 💍
@@ -9455,7 +9884,8 @@
           <circle cx="22" cy="24" r="2.5" fill="rgba(244,185,66,0.85)" />
           <circle cx="26" cy="26" r="3" fill="rgba(224,178,60,0.95)" />
         </svg>
-        <div class="intro-photo"><img src="shivani-main-pic.jpg" alt="Shivani" /></div>
+        <div class="intro-photo"><img src="shivani-main-pic.jpg" alt="Shivani" /><span class="intro-photo-badge"
+            aria-hidden="true">❤️</span></div>
         <p class="intro-role">The Bride</p>
         <h3 class="intro-name">Shivani</h3>
         <p class="intro-bio">तेरा हाथ थामकर ही हर सफ़र पूरा लगता है, तेरे साथ मेरा हर दिन खूबसूरत लगता है। ❤️</p>
@@ -9535,7 +9965,7 @@
         <circle cx="48" cy="4" r="3" fill="rgba(255,122,61,0.7)" />
       </svg>
       <div class="family-grid">
-        <div class="family-side">
+        <div class="family-side groom-parents">
           <div class="fam-photo-pair">
             <div class="fam-photo">
               <img src="father-groom.jpg" alt="Father of the Groom"
@@ -9553,7 +9983,7 @@
               class="fam-fill">Bebi Devi</span></p>
           <p class="family-sub">Proud parents of Aman</p>
         </div>
-        <div class="family-side">
+        <div class="family-side bride-parents">
           <div class="fam-photo-pair">
             <div class="fam-photo">
               <img src="father-bride.jpg" alt="Father of the Bride"
@@ -10077,10 +10507,14 @@
             <circle cx="40" cy="18" r="1.8" fill="rgba(201,170,114,0.6)"
               style="animation-duration:2.2s;animation-delay:0.8s" />
           </svg>
-          <span class="sc-chapter">Chapter I</span>
-          <div class="sc-icon">🌸</div>
-          <p class="sc-title">First Meeting</p>
-          <span class="sc-title-hindi">पहली मुलाक़ात</span>
+          <div class="sc-head">
+            <span class="sc-chapter">Chapter I</span>
+            <div class="sc-icon">🌸</div>
+          </div>
+          <div class="sc-title-row">
+            <p class="sc-title">First Meeting</p>
+            <span class="sc-title-hindi">पहली मुलाक़ात</span>
+          </div>
           <p class="sc-txt">शिव मंदिर में एक अनजानी सी मुलाकात से शुरू हुई एक खूबसूरत कहानी —
             दो दिलों का यूँ मिलना, बिल्कुल अनजाने में, मगर जैसे होना ही था। ❤️</p>
         </div>
@@ -10109,10 +10543,14 @@
             <circle cx="38" cy="20" r="1.4" fill="rgba(255,193,122,0.75)"
               style="animation-duration:2.3s;animation-delay:0.4s" />
           </svg>
-          <span class="sc-chapter">Chapter II</span>
-          <div class="sc-icon">💬</div>
-          <p class="sc-title">Growing Closer</p>
-          <span class="sc-title-hindi">दिल से दिल का रिश्ता</span>
+          <div class="sc-head">
+            <span class="sc-chapter">Chapter II</span>
+            <div class="sc-icon">💬</div>
+          </div>
+          <div class="sc-title-row">
+            <p class="sc-title">Growing Closer</p>
+            <span class="sc-title-hindi">दिल से दिल का रिश्ता</span>
+          </div>
           <p class="sc-txt">देर रात तक चलती बातें, साथ देखे गए सपने और वो हँसी जो कभी खत्म होने का नाम नहीं लेती थी —
             हर गुजरते पल के साथ हमारा रिश्ता और भी गहरा होता गया, और कब ये बंधन अटूट बन गया, पता ही नहीं चला</p>
         </div>
@@ -10133,10 +10571,14 @@
             <circle cx="36" cy="16" r="1.8" fill="rgba(255,95,176,0.6)"
               style="animation-duration:2.1s;animation-delay:0.8s" />
           </svg>
-          <span class="sc-chapter">Chapter III</span>
-          <div class="sc-icon">❤️</div>
-          <p class="sc-title">Falling in Love</p>
-          <span class="sc-title-hindi">मोहब्बत में गिरना</span>
+          <div class="sc-head">
+            <span class="sc-chapter">Chapter III</span>
+            <div class="sc-icon">❤️</div>
+          </div>
+          <div class="sc-title-row">
+            <p class="sc-title">Falling in Love</p>
+            <span class="sc-title-hindi">मोहब्बत में गिरना</span>
+          </div>
           <p class="sc-txt">जो रिश्ता दोस्ती से शुरू हुआ, वो कब प्यार की खूबसूरत कहानी बन गया — जैसे हमारी कहानी सितारों
             में पहले से ही लिखी हो।
             शांत, सुकून भरी और उम्रभर की.</p>
@@ -10166,17 +10608,21 @@
             <circle cx="6" cy="16" r="1.5" fill="rgba(201,170,114,0.6)"
               style="animation-duration:2.6s;animation-delay:1.2s" />
           </svg>
-          <span class="sc-chapter">Chapter IV</span>
-          <div class="sc-icon">💍</div>
-          <p class="sc-title">The Proposal</p>
-          <span class="sc-title-hindi">हाँ, मैं तुम्हारी हूँ</span>
+          <div class="sc-head">
+            <span class="sc-chapter">Chapter IV</span>
+            <div class="sc-icon">💍</div>
+          </div>
+          <div class="sc-title-row">
+            <p class="sc-title">The Proposal</p>
+            <span class="sc-title-hindi">हाँ, मैं तुम्हारी हूँ</span>
+          </div>
           <p class="sc-txt">सितारों से सजे उस आसमान के नीचे, Aman ने अपनी ज़िंदगी का सबसे ख़ास सवाल पूछा — और Shivani ने
             मुस्कुराकर ‘हाँ’ कह दी,
             जैसे उस रात की सारी रोशनी उसकी मुस्कान में समा गई हो।.</p>
         </div>
       </div>
 
-      <!-- Chapter 5 — The Promise (FULL WIDTH finale) -->
+      <!-- Chapter 5 — The Promise (FULL WIDTH finale) — TEMPORARILY DISABLED
       <div class="st-row" style="grid-template-columns:1fr;">
         <div class="sc sc-wide storybook tilt-card" style="margin:24px 0 0;">
           <div class="sc-wide-rings"></div>
@@ -10203,6 +10649,7 @@
             शामिल होने के लिए सादर आमंत्रित करते हैं।</p>
         </div>
       </div>
+      END Chapter 5 -->
 
     </div><!-- /.story-timeline -->
   </section>
@@ -11165,7 +11612,7 @@
               obs.unobserve(e.target);
             }
           });
-        }, { threshold: 0.10 });
+        }, { threshold: 0.01, rootMargin: '0px 0px 150px 0px' });
         els.forEach(function (el) { obs.observe(el); });
       } else {
         els.forEach(function (el) { el.classList.add('on'); });
@@ -13376,6 +13823,34 @@
 
   #entry-gate .gate-door-right {
     background-position: right center !important;
+  }
+</style>
+
+<style id="glassmorphism-cards-finish">
+  /* A few card surfaces across the site were still fully opaque —
+     everything else (event cards, festivity cards, story chapters,
+     the RSVP box, Meet-The-Couple cards) already uses a frosted
+     glass treatment. This brings the remaining ones in line.
+
+     NOTE: backdrop-filter: blur() is expensive to render. It's fine
+     on a handful of large, static panels, but applying it to many
+     repeated small elements (30 host-name-chips, 4 continuously
+     animating countdown boxes) froze the page — so those two use a
+     plain translucent tint instead of blur. Only the single
+     .family-wrap card gets the full frosted-glass treatment. */
+
+  .family-wrap {
+    background-color: rgba(30, 10, 18, 0.42) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+  }
+
+  .cd-box {
+    background: linear-gradient(160deg, rgba(17, 20, 44, 0.72), rgba(5, 6, 15, 0.72)) !important;
+  }
+
+  .host-name-chip::before {
+    background: rgba(10, 12, 26, 0.75) !important;
   }
 </style>
 
