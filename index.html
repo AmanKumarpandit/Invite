@@ -268,7 +268,10 @@
       transform: rotate(180deg);
     }
 
-    /* Pulsing orbit rings */
+    /* PLANET / SOLAR-SYSTEM ANIMATION — COMMENTED OUT
+       Original rules retained below for easy restoration.
+
+    
     .orbit {
       position: absolute;
       border-radius: 50%;
@@ -312,9 +315,9 @@
       }
     }
 
-    /* ── Solar system: planets orbiting on the existing rings ── */
+    
 
-    /* Explicit, responsive ring sizes (scale by viewport so they never overflow small screens) */
+    
     .orbit.orbit-outer {
       width: min(720px, 92vw);
       height: min(720px, 92vw);
@@ -333,7 +336,7 @@
       animation-delay: 3.5s;
     }
 
-    /* Wrapper that continuously rotates a planet around its ring's edge */
+    
     .orbit-spin {
       position: absolute;
       inset: 0;
@@ -381,7 +384,7 @@
       box-shadow: 0 0 10px rgba(224, 178, 60, 0.8), 0 0 22px rgba(224, 178, 60, 0.4);
     }
 
-    /* Saturn-style tilted ring around the outer planet */
+    
     .planet-outer::before {
       content: '';
       position: absolute;
@@ -411,6 +414,8 @@
       background: radial-gradient(circle at 32% 30%, #ffd0e8, var(--blush) 60%, #8a1f57 100%);
       box-shadow: 0 0 7px rgba(255, 95, 176, 0.85), 0 0 16px rgba(255, 95, 176, 0.4);
     }
+
+    */
 
     /* Star particles */
     .stars {
@@ -780,14 +785,6 @@
     /* ═══════════════════════════════════════
    REVEAL ANIMATION
 ═══════════════════════════════════════ */
-    .reveal {
-      opacity: 0;
-      transform: perspective(1000px) rotateX(16deg) translateY(52px) scale(0.94);
-      transform-origin: 50% 100%;
-      transition: opacity 0.55s cubic-bezier(.22, .68, 0, 1.05), transform 0.55s cubic-bezier(.22, .68, 0, 1.05);
-      will-change: transform, opacity;
-    }
-
     .reveal.on {
       opacity: 1;
       transform: none;
@@ -802,17 +799,6 @@
       max-width: 800px;
       margin: 0 auto;
       padding: 80px 28px;
-    }
-
-    /* Skip layout/paint work for sections that are off-screen. With ten
-       image-heavy, blurred, animated sections on one long page, rendering
-       all of them at once is a big part of what was overloading mobile
-       Safari during a fast scroll. contain-intrinsic-size keeps the
-       scrollbar/scroll position stable while a section is skipped. This
-       is a no-op on browsers that don't support content-visibility. */
-    section:not(.no-card-frame) {
-      content-visibility: auto;
-      contain-intrinsic-size: auto 1000px;
     }
 
     .bg-dark {
@@ -4357,21 +4343,11 @@
    perspective fold + shadow cast.
 ═══════════════════════════════════════ */
     .reveal {
-      opacity: 0;
-      transform-origin: 50% 100%;
-      transform: perspective(1200px) rotateX(22deg) translateY(60px) scale(0.93);
-      transition:
-        opacity 0.45s cubic-bezier(.22, .68, 0, 1.05),
-        transform 0.45s cubic-bezier(.22, .68, 0, 1.05),
-        box-shadow 0.45s ease;
-      will-change: transform, opacity;
-      box-shadow: 0 40px 80px rgba(0, 0, 0, 0);
+      opacity: 1;
     }
 
     .reveal.on {
       opacity: 1;
-      transform: perspective(1200px) rotateX(0deg) translateY(0) scale(1);
-      box-shadow: 0 12px 60px rgba(0, 0, 0, 0.25);
     }
 
     /* ═══════════════════════════════════════
@@ -4460,6 +4436,7 @@
         margin-top: 18px;
       }
 
+      /* PLANET / ORBIT RESPONSIVE SIZING — COMMENTED OUT
       .orbit:nth-child(1) {
         width: 520px;
         height: 520px;
@@ -4474,6 +4451,7 @@
         width: 250px;
         height: 250px;
       }
+      */
 
       /* ── Hero date strip — stack vertically ── */
       /* ── Meet the couple ── */
@@ -4654,6 +4632,7 @@
         height: 82px;
       }
 
+      /* PLANET / ORBIT RESPONSIVE SIZING — COMMENTED OUT
       .orbit:nth-child(1) {
         width: 320px;
         height: 320px;
@@ -4668,6 +4647,7 @@
         width: 155px;
         height: 155px;
       }
+      */
 
       /* ── Date strip ── */
       /* ── Meet the couple ── */
@@ -5108,6 +5088,7 @@
         font-size: 0.42em;
       }
 
+      /* PLANET / ORBIT RESPONSIVE SIZING — COMMENTED OUT
       .orbit:nth-child(1) {
         width: 280px;
         height: 280px;
@@ -5122,6 +5103,7 @@
         width: 135px;
         height: 135px;
       }
+      */
 
       .scroll-cue {
         font-size: 8px;
@@ -8873,35 +8855,52 @@
   </style>
 
 
+  <style id="wedding-video-style">
+    /* Immersive portrait invitation video — styled like a visual section,
+       not like a conventional media player. */
+    .wedding-video-section {
+      position: relative;
+      width: 100%;
+      max-width: none;
+      min-height: 100svh;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .wedding-invitation-video {
+      display: block;
+      width: min(100vw, calc(100svh * 9 / 16));
+      height: min(100svh, calc(100vw * 16 / 9));
+      aspect-ratio: 9 / 16;
+      max-width: 100vw;
+      max-height: 100svh;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      outline: 0;
+      object-fit: cover;
+      object-position: center center;
+      background: #000;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+    }
+  </style>
+
   <style id="wedding-fireworks-style">
-    /* ─────────────────────────────────────────────────────────────
-   WEDDING FIREWORKS
-   Fixed to the viewport (like the site's own #bg-canvas starfield)
-   so the show keeps running behind every section as the page
-   scrolls, not just within the hero. Still sits behind the floral
-   frame + typography locally and never captures input.
-
-   NOTE: .hero intentionally does NOT get `isolation: isolate` here.
-   These effects are position:fixed, which escapes isolation (it
-   only traps normal-flow descendants, not fixed ones) and puts
-   them in the root stacking context at z-index 0–2. If .hero were
-   isolated, .hero-content's z-index:4 would be trapped *inside*
-   that isolated context and become incomparable to these fixed
-   layers — so the fixed canvases (z-index 1–2) would paint above
-   the entire hero box regardless of hero-content's local z-index,
-   hiding all of the invitation text behind the light show. Leaving
-   .hero un-isolated lets its children's z-index values (0/2/3/4)
-   compare directly against the fixed canvases' (0/1/2) in the same
-   root stacking context, which is what keeps the text and ring on
-   top while the effects still run behind it.
-   ───────────────────────────────────────────────────────────── */
-
+    /* WEDDING FIREWORKS — foreground celebration layer. */
     #wedding-fireworks {
       position: fixed;
       inset: 0;
       width: 100vw;
       height: 100vh;
-      z-index: 1;
+      z-index: 900;
       display: block;
       pointer-events: none;
       opacity: .97;
@@ -8909,67 +8908,29 @@
       filter: saturate(1.45) contrast(1.12) brightness(1.08);
     }
 
-    .hero-atmosphere {
-      z-index: 0;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 4;
-    }
-
-    .hero-floral-frame {
-      z-index: 3;
-    }
-
-    .hero-trellis,
-    .stars,
-    .petals-wrap,
-    .hero-petal {
-      z-index: 2;
-    }
-
-    @media (max-width:767px) {
-      #wedding-fireworks {
-        opacity: .90;
-      }
-    }
-
-    @media (prefers-reduced-motion:reduce) {
-      #wedding-fireworks {
-        opacity: .35;
-      }
-    }
+    @media (max-width: 767px) { #wedding-fireworks { opacity: .90; } }
+    @media (prefers-reduced-motion: reduce) { #wedding-fireworks { opacity: .35; } }
   </style>
 
   <style id="wedding-lightning-style">
-    /* Fixed to the viewport too, so the occasional thunderbolt keeps
-       flashing behind later sections instead of stopping at the hero. */
+    /* WEDDING LIGHTNING — foreground thunderbolt layer. */
     #wedding-lightning {
       position: fixed;
       inset: 0;
       width: 100vw;
       height: 100vh;
-      z-index: 2;
+      z-index: 901;
       display: block;
       pointer-events: none;
       opacity: .78;
       mix-blend-mode: screen;
     }
 
-    @media (max-width:767px) {
-      #wedding-lightning {
-        opacity: .68;
-      }
-    }
-
-    @media (prefers-reduced-motion:reduce) {
-      #wedding-lightning {
-        opacity: .30;
-      }
-    }
+    @media (max-width: 767px) { #wedding-lightning { opacity: .68; } }
+    @media (prefers-reduced-motion: reduce) { #wedding-lightning { opacity: .30; } }
   </style>
 
+  <!-- DRONE LIGHT-SHOW CSS — COMMENTED OUT
   <style id="wedding-drones-style">
     /* ─────────────────────────────────────────────────────────────
    WEDDING DRONE LIGHT SHOW
@@ -9002,6 +8963,7 @@
       }
     }
   </style>
+  -->
 
 </head>
 
@@ -9044,6 +9006,26 @@
   <canvas id="bg-canvas"></canvas>
   <div class="bg-royal"></div>
   <div class="bg-blobs"><i></i></div>
+
+  <!-- Foreground celebration overlays: visible over every page section. -->
+  <canvas id="wedding-fireworks" class="wedding-fireworks" aria-hidden="true"></canvas>
+  <canvas id="wedding-lightning" class="wedding-lightning" aria-hidden="true"></canvas>
+
+  <!-- DRONE + PLANET HTML — COMMENTED OUT
+  The original drone canvas and solar-system/orbit markup are intentionally
+  retained here for easy restoration, but are not part of the live page.
+
+  <canvas id="wedding-drones" class="wedding-drones" aria-hidden="true"></canvas>
+  <div class="orbit orbit-outer">
+    <div class="orbit-spin"><span class="planet planet-outer"></span></div>
+  </div>
+  <div class="orbit orbit-mid">
+    <div class="orbit-spin"><span class="planet planet-mid"></span></div>
+  </div>
+  <div class="orbit orbit-inner">
+    <div class="orbit-spin"><span class="planet planet-inner"></span></div>
+  </div>
+  -->
 
   <!-- Entry gate: unlocks sound (browser policy) and starts the choreographed reveal -->
   <!-- Entry gate: the decorative doors themselves are the opening control -->
@@ -9089,7 +9071,7 @@
         <div class="gate-title">Aman <span>संग</span> Shivani</div>
         <img class="gate-div gate-div-main"
           src="data:image/webp;base64,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"
-          alt="" aria-hidden="true" loading="lazy" decoding="async" />
+          alt="" aria-hidden="true" decoding="async" />
         <p class="gate-sub">शुभ विवाह समारोह में सादर आमंत्रण</p>
 
         <!-- Optional guest name field -->
@@ -9103,25 +9085,25 @@
             <button class="fest-tab-btn gate-card" data-side="groom" data-target="gate-side" type="button">
               <img class="gate-card-icon"
                 src="data:image/webp;base64,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"
-                alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                alt="" aria-hidden="true" decoding="async" />
               <span class="gate-card-hi">वर पक्ष</span>
               <span class="gate-card-en">Groom Side</span>
               <img class="gate-card-swirl"
                 src="data:image/webp;base64,UklGRjAEAABXRUJQVlA4WAoAAAAQAAAAkgAAIAAAQUxQSIwAAAABgNtIkiMp/Xc6hOmZvSdH/4WImID+jvN4eECsDwbCxl0zDxps7ww2DiOLwwnugHVBM4KiGW7Hz3K9QlP7HR1ianX1d0EzVaiyppElNLvhT+siLFzoyKZQ0EX62brucEmryZJGZXvlN56KZUTGZaa6G3uYEBEmdJcdlrEcdreH2rROPYInjyR6PPVPNlZQOCB+AwAAcBQAnQEqkwAhAD4pEohCIaEhFEz9RBgChLOAZ7EIID+R1gQEZnp/1V/zPozetb6APPV6jHns/26+DD9v/Se//+tbQgyomAGkCmGf9j+6eb759/6/uD/rF0QHsZ/qga4qoZh0aFT0LZ1iZ2SurM+ihN25mbGeKQz5HQJH/74J0P8Mhb8dpTsQU1XauaMntatOe9HepGqdIB79oAvfZERs5/CTSiVMdFZm9gsWgAD+/uHBfQrWXsiXFVsDBYf/C2MJ3ERmH6s/9xDeL6+QRzh6NB8FVfeeBi17Pta0Tv+oMexvF1Xg2psDieR5sKt+NNQxSc2/itnBOci41U18e64ymF73812fNaP+PKr8h9W9iee3+gF6vvm2XlMlGoU20YCzZNPgro3Bg2WX2wIe1rMwPHUdRMvaJxCzbL3n+qiv3J82jCmRo8re4nCbf+tTf+KcmBNnnbxvA3hIglonfIO8azElh5Ml4Q7hvE02dGGpLo3BexDigVma1e+Y2KZqnq77MAvX/fOWFMfj/G+0+ekuiKuHflF9muc32mAiFXkrjt2T8iPVPzkn+32AfaCiUvFwWXg04LdPzpM6pxCe/Z2df/II9me82nLXWMNF0FD25g4emjIqGHYvux3z6wEAcWCwDVoJcEsiEqeVKtNmdtTtM8g4nFpB+lyluxSPS57Ti6Pd5UlLl4J1TmNdfd3mPPSpc0IncRBLUc15uUsB27SeDFhqkvglvYozoNWZhVqXVQFPsz4cOkjo324amf3pNv+1w700Nyfai/JhmJsfz49S74XDrQOPldaRojfMCj875dmIFBVF5ihi//7bGl//usYpAHu8KFU4sZTr0Lx6InA4vubsNldPycxpTTEXfWu4Ggtcg1rj01tizaQEVLoAsv7vC7v7C6ahv4Q8oSX4/YzEvjeYV1PhdE5D+8Aj19wOPAbaPOF4esYfKERK7l7+u+L8lo9g/tV/u9ko9UmC1LStD4rQWxv1+sNay7xiv0n57ECqiUxSRl6A2t6uFS+cRQow7Ys6FVDHtbFWR/uan0nEfEyVlQ6JQikjyC5CwupXOXq6uD7E7/j0ZQa73Y9DBIFHMuChbqn6UGnpX6cQolldVz0KKA44BJ7zGMAYChOldidkKATX4wYlj31berhT37enOIpulTValVANsiQFWbpxsCzj8HDhbSDOdHWAAAAA"
-                alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                alt="" aria-hidden="true" decoding="async" />
             </button>
             <img class="gate-card-diamond"
               src="data:image/webp;base64,UklGRtgCAABXRUJQVlA4WAoAAAAQAAAAQwAAQAAAQUxQSGwAAAABDzD/ERHCTSRJjtSnzTkEN0ReUHoAaqANlIWw5iuz+/X7Ef2fAAAYIf/d148vsOfCRarSqFnsIFdqwcQ8jITBSU7YkNJhT2qDOykTjiQNWxIeTrBNY/sysXNtWL3gqXISuRXhz8HUqH7w+DZWUDggRgIAADAOAJ0BKkQAQQA+KRSIQyGhIRH6rUQYAoSxgGd1E1qrRIvmA3h3pAeYDdAP6X1B3PoexN+1n7OezGYD6Y34rPof2APIA8wD2TSelwrtX3x7QSeNHwVC6El1fzyIul3feT8a7nLKM4d7RQtlrDmvQGYYi3RrBVx4pKfgAP7+7k64cN1/xLdFo0ILb/8gZB+muo+6Cwrw7ld//P6pK6Exetr3f0Lf4ymd/Ul2zNq/kvElhex+SQ8+o/O9ZqWnoNCWmE2U5pMff4f/wgMtfkjWMBaaH91PL+oUFtwD+GlRhyqOq2Qq6cKrhgswldfT3f4BlzWH/GFR4KYNG6eJDgSf2vGff2LSFOaksP6Lzgt77d6NCIGDU3MeoUn/bumGkKe6Am1hTLM1u8JPoiRlJAI9/+fnxEfPoHAkpne5TMWKxH82QgtHslku8ggFdumYpsbsShk14RZd20chwcebZKv+UjaTxbDy1PV7TmFOBJtBcAHFXD1fp5JL4GKejrzO9/P0uQZ9WoZDLZ+E8tv5uvsIpCkjeAa+BQemXCSyAFmo9XWvACg7Pc8Ivb3HI2Yi2U3TvH7sqesPFv4sveohB54PWLX1eWrXYqNopSvXNcdbhapsyYht24NLfxo19ynxAyNFFU3NZ0G4sk94FweLSnl+nqzu+ptQ2bSmCJCv+SjnOtK4mRBuTPqOsn5JJ/OveTcUmfAREbyzR7U5t643mdGRbHEe5MX44lKRx/2HgpaqBNzZKw249qtaaQoYQ9S2ebKyyne4XCAAAA=="
-              alt="" aria-hidden="true" loading="lazy" decoding="async" />
+              alt="" aria-hidden="true" decoding="async" />
             <button class="fest-tab-btn gate-card" data-side="bride" data-target="gate-side" type="button">
               <img class="gate-card-icon"
                 src="data:image/webp;base64,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"
-                alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                alt="" aria-hidden="true" decoding="async" />
               <span class="gate-card-hi">वधु पक्ष</span>
               <span class="gate-card-en">Bride Side</span>
               <img class="gate-card-swirl"
                 src="data:image/webp;base64,UklGRjAEAABXRUJQVlA4WAoAAAAQAAAAkgAAIAAAQUxQSIwAAAABgNtIkiMp/Xc6hOmZvSdH/4WImID+jvN4eECsDwbCxl0zDxps7ww2DiOLwwnugHVBM4KiGW7Hz3K9QlP7HR1ianX1d0EzVaiyppElNLvhT+siLFzoyKZQ0EX62brucEmryZJGZXvlN56KZUTGZaa6G3uYEBEmdJcdlrEcdreH2rROPYInjyR6PPVPNlZQOCB+AwAAcBQAnQEqkwAhAD4pEohCIaEhFEz9RBgChLOAZ7EIID+R1gQEZnp/1V/zPozetb6APPV6jHns/26+DD9v/Se//+tbQgyomAGkCmGf9j+6eb759/6/uD/rF0QHsZ/qga4qoZh0aFT0LZ1iZ2SurM+ihN25mbGeKQz5HQJH/74J0P8Mhb8dpTsQU1XauaMntatOe9HepGqdIB79oAvfZERs5/CTSiVMdFZm9gsWgAD+/uHBfQrWXsiXFVsDBYf/C2MJ3ERmH6s/9xDeL6+QRzh6NB8FVfeeBi17Pta0Tv+oMexvF1Xg2psDieR5sKt+NNQxSc2/itnBOci41U18e64ymF73812fNaP+PKr8h9W9iee3+gF6vvm2XlMlGoU20YCzZNPgro3Bg2WX2wIe1rMwPHUdRMvaJxCzbL3n+qiv3J82jCmRo8re4nCbf+tTf+KcmBNnnbxvA3hIglonfIO8azElh5Ml4Q7hvE02dGGpLo3BexDigVma1e+Y2KZqnq77MAvX/fOWFMfj/G+0+ekuiKuHflF9muc32mAiFXkrjt2T8iPVPzkn+32AfaCiUvFwWXg04LdPzpM6pxCe/Z2df/II9me82nLXWMNF0FD25g4emjIqGHYvux3z6wEAcWCwDVoJcEsiEqeVKtNmdtTtM8g4nFpB+lyluxSPS57Ti6Pd5UlLl4J1TmNdfd3mPPSpc0IncRBLUc15uUsB27SeDFhqkvglvYozoNWZhVqXVQFPsz4cOkjo324amf3pNv+1w700Nyfai/JhmJsfz49S74XDrQOPldaRojfMCj875dmIFBVF5ihi//7bGl//usYpAHu8KFU4sZTr0Lx6InA4vubsNldPycxpTTEXfWu4Ggtcg1rj01tizaQEVLoAsv7vC7v7C6ahv4Q8oSX4/YzEvjeYV1PhdE5D+8Aj19wOPAbaPOF4esYfKERK7l7+u+L8lo9g/tV/u9ko9UmC1LStD4rQWxv1+sNay7xiv0n57ECqiUxSRl6A2t6uFS+cRQow7Ys6FVDHtbFWR/uan0nEfEyVlQ6JQikjyC5CwupXOXq6uD7E7/j0ZQa73Y9DBIFHMuChbqn6UGnpX6cQolldVz0KKA44BJ7zGMAYChOldidkKATX4wYlj31berhT37enOIpulTValVANsiQFWbpxsCzj8HDhbSDOdHWAAAAA"
-                alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                alt="" aria-hidden="true" decoding="async" />
             </button>
           </div>
         </div>
@@ -9134,7 +9116,7 @@
 
         <img class="gate-div gate-div-heart"
           src="data:image/webp;base64,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"
-          alt="" aria-hidden="true" loading="lazy" decoding="async" />
+          alt="" aria-hidden="true" decoding="async" />
 
         <p class="gate-hint">
           Best experienced with sound on
@@ -9186,148 +9168,25 @@
     <img class="beginning-blessings-border" alt="" aria-hidden="true" src="assets/beginning-blessings-border.jpg">
   </div>
 
-  <div class="hero">
-    <img class="hero-floral-frame" src="assets/wedding-invitation-border.jpg" alt="" aria-hidden="true"
-      draggable="false" />
-    <div class="hero-atmosphere"></div>
-    <!-- Ambient drone light-show art: painted above the atmosphere overlay so it reads clearly -->
-    <canvas id="wedding-drones" class="wedding-drones" aria-hidden="true"></canvas>
-    <!-- Continuous realistic fireworks: background-only, pointer-events disabled -->
-    <canvas id="wedding-fireworks" class="wedding-fireworks" aria-hidden="true"></canvas>
-    <!-- Occasional cinematic thunderbolt lightning, behind all invitation content -->
-    <canvas id="wedding-lightning" class="wedding-lightning" aria-hidden="true"></canvas>
-    <!-- Solar system: orbiting planets, centered behind the hero content -->
-    <div class="orbit orbit-outer">
-      <div class="orbit-spin"><span class="planet planet-outer"></span></div>
-    </div>
-    <div class="orbit orbit-mid">
-      <div class="orbit-spin"><span class="planet planet-mid"></span></div>
-    </div>
-    <div class="orbit orbit-inner">
-      <div class="orbit-spin"><span class="planet planet-inner"></span></div>
-    </div>
-    <div class="stars" id="star-field"></div>
-    <div class="petals-wrap" id="petal-field"></div>
-
-    <!-- Diagonal trellis vine panels (decorative SVG) -->
-    <svg class="hero-trellis tl" viewBox="0 0 220 220" fill="none" aria-hidden="true">
-      <path d="M0 220 Q30 160 80 140 Q130 120 110 60 Q90 0 140 0" stroke="rgba(224,178,60,0.55)" stroke-width="1"
-        fill="none" />
-      <path d="M0 180 Q50 140 70 90 Q90 40 150 20" stroke="rgba(224,178,60,0.35)" stroke-width="0.8" fill="none" />
-      <!-- small flower at junction -->
-      <circle cx="90" cy="108" r="3" fill="rgba(244,185,66,0.65)" />
-      <circle cx="92" cy="100" r="2" fill="rgba(244,185,66,0.4)" />
-      <circle cx="98" cy="106" r="2" fill="rgba(244,185,66,0.4)" />
-      <circle cx="82" cy="106" r="2" fill="rgba(244,185,66,0.4)" />
-      <circle cx="90" cy="116" r="2" fill="rgba(244,185,66,0.4)" />
-    </svg>
-    <svg class="hero-trellis br" viewBox="0 0 220 220" fill="none" aria-hidden="true">
-      <path d="M0 220 Q30 160 80 140 Q130 120 110 60 Q90 0 140 0" stroke="rgba(224,178,60,0.55)" stroke-width="1"
-        fill="none" />
-      <path d="M0 180 Q50 140 70 90 Q90 40 150 20" stroke="rgba(224,178,60,0.35)" stroke-width="0.8" fill="none" />
-      <circle cx="90" cy="108" r="3" fill="rgba(244,185,66,0.65)" />
-      <circle cx="92" cy="100" r="2" fill="rgba(244,185,66,0.4)" />
-      <circle cx="98" cy="106" r="2" fill="rgba(244,185,66,0.4)" />
-      <circle cx="82" cy="106" r="2" fill="rgba(244,185,66,0.4)" />
-      <circle cx="90" cy="116" r="2" fill="rgba(244,185,66,0.4)" />
-    </svg>
-
-    <!-- Floating marigold petals (CSS-animated, JS will add more) -->
-    <div class="hero-petal"
-      style="left:8%;  width:9px; height:13px; background:#f4b942; animation-duration:11s; animation-delay:0s;"></div>
-    <div class="hero-petal"
-      style="left:19%; width:7px; height:10px; background:#ff7a3d; animation-duration:14s; animation-delay:1.8s;"></div>
-    <div class="hero-petal"
-      style="left:31%; width:10px;height:14px; background:#f4b942; animation-duration:9s;  animation-delay:3.5s;"></div>
-    <div class="hero-petal"
-      style="left:47%; width:8px; height:12px; background:#e0b23c; animation-duration:13s; animation-delay:0.7s;"></div>
-    <div class="hero-petal"
-      style="left:61%; width:11px;height:15px; background:#ff7a3d; animation-duration:10s; animation-delay:5s;"></div>
-    <div class="hero-petal"
-      style="left:73%; width:7px; height:11px; background:#f4b942; animation-duration:15s; animation-delay:2.3s;"></div>
-    <div class="hero-petal"
-      style="left:85%; width:9px; height:13px; background:#e0b23c; animation-duration:12s; animation-delay:4.2s;"></div>
-    <div class="hero-petal"
-      style="left:93%; width:8px; height:11px; background:#ff7a3d; animation-duration:8s;  animation-delay:6.5s;"></div>
-    <!-- pink rose petals -->
-    <div class="hero-petal"
-      style="left:25%; width:8px; height:11px; background:#ff8fc9; animation-duration:16s; animation-delay:7.1s; border-radius:0 60% 0 60%;">
-    </div>
-    <div class="hero-petal"
-      style="left:55%; width:7px; height:10px; background:#ff5fb0; animation-duration:12s; animation-delay:9s;   border-radius:0 60% 0 60%;">
-    </div>
-    <div class="hero-petal"
-      style="left:78%; width:9px; height:13px; background:#ff8fc9; animation-duration:10s; animation-delay:3s;   border-radius:0 60% 0 60%;">
-    </div>
-
-    <div class="hero-content">
-      <div class="divine-emblem">
-        <div class="divine-photo-frame">
-          <img src="ganesh-ji.jpg" alt="Shree Ganesh"
-            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" loading="lazy" decoding="async" />
-          <div class="ph-fallback divine-fallback">&#x0950;</div>
-        </div>
-        <p class="divine-text">श्री गणेशाय नमः</p>
-        <p class="shloka-inline"
-          style="font-size:clamp(17px,4.4vw,20.5px);margin-top:8px;color:rgba(240,225,190,0.95);opacity:1;">
-          वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ।<br />
-          निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥
-        </p>
-      </div>
-      <div class="hero-emblem" id="hero-emblem">
-        <div class="hero-emblem-fallback">
-          <svg viewBox="0 0 100 100" fill="none">
-            <circle cx="38" cy="50" r="26" stroke="url(#ringGradA)" stroke-width="4" />
-            <circle cx="62" cy="50" r="26" stroke="url(#ringGradB)" stroke-width="4" />
-            <defs>
-              <linearGradient id="ringGradA" x1="0" y1="0" x2="100" y2="100">
-                <stop offset="0%" stop-color="#e0b23c" />
-                <stop offset="100%" stop-color="#f6d78a" />
-              </linearGradient>
-              <linearGradient id="ringGradB" x1="0" y1="0" x2="100" y2="100">
-                <stop offset="0%" stop-color="#22e5ff" />
-                <stop offset="100%" stop-color="#a78bfa" />
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-      </div>
-      <p class="hero-eyebrow">Wedding Invitation</p>
-      <p class="s-eyebrow-hindi"
-        style="font-size:clamp(17px,4.2vw,22px);margin-top:4px;letter-spacing:1px;color:rgba(224,178,60,0.95);opacity:1;">
-        ✦ &nbsp; शुभ विवाह निमंत्रण &nbsp; ✦
-      </p>
-
-      <div class="orn">
-        <span class="orn-line"></span>
-        <span class="orn-gem">✦</span>
-        <span class="orn-line"></span>
-      </div>
-
-      <h1 class="couple-names">
-        <span class="name-a lw"><span class="ltr" style="animation-delay:0.60s">A</span><span class="ltr"
-            style="animation-delay:0.67s">m</span><span class="ltr" style="animation-delay:0.74s">a</span><span
-            class="ltr" style="animation-delay:0.81s">n</span></span>
-        <span class="name-amp">संग</span>
-        <span class="name-b lw"><span class="ltr" style="animation-delay:1.05s">S</span><span class="ltr"
-            style="animation-delay:1.12s">h</span><span class="ltr" style="animation-delay:1.19s">i</span><span
-            class="ltr" style="animation-delay:1.26s">v</span><span class="ltr"
-            style="animation-delay:1.33s">a</span><span class="ltr" style="animation-delay:1.40s">n</span><span
-            class="ltr" style="animation-delay:1.47s">i</span></span>
-      </h1>
-
-      <p class="hero-tagline" id="hero-tagline">Joyfully invite you to celebrate our Wedding</p>
-      <p class="s-eyebrow-hindi"
-        style="font-size:clamp(16px,3.8vw,20.5px);margin-top:8px;color:rgba(240,225,190,0.9);opacity:1;letter-spacing:0.5px;">
-        सप्तपदी के बंधन में बँधने, हम आपको आमंत्रित करते हैं
-      </p>
-    </div>
-
-    <div class="scroll-cue">
-      <span>Scroll</span>
-      <div class="scroll-dot"></div>
-    </div>
-  </div>
+  <!-- ════════════════════════════════════
+       WEDDING INVITATION VIDEO
+       9:16 immersive loop — no player chrome visible
+  ════════════════════════════════════ -->
+  <section class="wedding-video-section no-card-frame" data-section="wedding-invitation-video" aria-label="Wedding Invitation Video">
+    <video
+      id="wedding-invitation-video"
+      class="wedding-invitation-video"
+      src="assets/video.MP4"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      disablepictureinpicture
+      controlslist="nodownload noplaybackrate noremoteplayback"
+      aria-label="Aman and Shivani wedding invitation video">
+    </video>
+  </section>
 
   <!-- ════════════════════════════════════
      PERSONALISED GUEST GREETING BANNER
@@ -9569,7 +9428,7 @@
      WEDDING FESTIVITIES
 ════════════════════════════════ -->
   <section class="reveal" data-section="festivities">
-    <img class="festivities-floral-border" alt="" aria-hidden="true" src="assets/wedding-festivities-border.jpg" loading="lazy" decoding="async" >
+    <img class="festivities-floral-border" alt="" aria-hidden="true" src="assets/wedding-festivities-border.jpg" decoding="async" >
     <p class="s-eyebrow">Five Days Of Celebration</p>
     <span class="s-eyebrow-hindi">पाँच दिन, पाँच रंग, एक उत्सव</span>
     <h2 class="s-title">Wedding Festivities</h2>
@@ -9902,7 +9761,7 @@
      MEET THE COUPLE
 ════════════════════════════════ -->
   <section class="gsap-section" data-section="intro">
-    <img class="meet-couple-floral-border" alt="" aria-hidden="true" src="assets/meet-the-couple-border.jpg" loading="lazy" decoding="async" >
+    <img class="meet-couple-floral-border" alt="" aria-hidden="true" src="assets/meet-the-couple-border.jpg" decoding="async" >
     <h2 class="s-title">Meet The Couple</h2>
     <div class="s-rule"><span></span><em>◆</em><span></span></div>
 
@@ -9931,7 +9790,7 @@
           <circle cx="22" cy="24" r="2.5" fill="rgba(224,178,60,0.85)" />
           <circle cx="26" cy="26" r="3" fill="rgba(201,170,114,0.95)" />
         </svg>
-        <div class="intro-photo"><img src="aman-groom.jpg" alt="Aman" loading="lazy" decoding="async" /><span class="intro-photo-badge"
+        <div class="intro-photo"><img src="aman-groom.jpg" alt="Aman" decoding="async" /><span class="intro-photo-badge"
             aria-hidden="true">💍</span></div>
         <p class="intro-role">The Groom</p>
         <h3 class="intro-name">Aman</h3>
@@ -9973,7 +9832,7 @@
           <circle cx="22" cy="24" r="2.5" fill="rgba(244,185,66,0.85)" />
           <circle cx="26" cy="26" r="3" fill="rgba(224,178,60,0.95)" />
         </svg>
-        <div class="intro-photo"><img src="shivani-main-pic.jpg" alt="Shivani" loading="lazy" decoding="async" /><span class="intro-photo-badge"
+        <div class="intro-photo"><img src="shivani-main-pic.jpg" alt="Shivani" decoding="async" /><span class="intro-photo-badge"
             aria-hidden="true">❤️</span></div>
         <p class="intro-role">The Bride</p>
         <h3 class="intro-name">Shivani</h3>
@@ -9990,7 +9849,7 @@
      FAMILY & HOSTS
 ════════════════════════════════ -->
   <section class="gsap-section" data-section="family">
-    <img class="remaining-transparent-border" src="assets/family-transparent-border.png" alt="" aria-hidden="true" loading="lazy" decoding="async" >
+    <img class="remaining-transparent-border" src="assets/family-transparent-border.png" alt="" aria-hidden="true" decoding="async" >
     <p class="s-eyebrow">With Love &amp; Blessings</p>
     <span class="s-eyebrow-hindi">प्रेम और आशीर्वाद के साथ</span>
     <h2 class="s-title">Our Families</h2>
@@ -10058,12 +9917,12 @@
           <div class="fam-photo-pair">
             <div class="fam-photo">
               <img src="father-groom.jpg" alt="Father of the Groom"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" loading="lazy" decoding="async" />
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" decoding="async" />
               <div class="ph-fallback">&#128104;</div>
             </div>
             <div class="fam-photo">
               <img src="mother-groom.jpg" alt="Mother of the Groom"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" loading="lazy" decoding="async" />
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" decoding="async" />
               <div class="ph-fallback">&#128105;</div>
             </div>
           </div>
@@ -10076,12 +9935,12 @@
           <div class="fam-photo-pair">
             <div class="fam-photo">
               <img src="father-bride.jpg" alt="Father of the Bride"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" loading="lazy" decoding="async" />
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" decoding="async" />
               <div class="ph-fallback">&#128104;</div>
             </div>
             <div class="fam-photo">
               <img src="mother-bride.jpg" alt="Mother of the Bride"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" loading="lazy" decoding="async" />
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" decoding="async" />
               <div class="ph-fallback">&#128105;</div>
             </div>
           </div>
@@ -10105,7 +9964,7 @@
           <!-- Bade Bhaiya (1st son) -->
           <div class="fam-member-card">
             <div class="fam-member-photo-placeholder">
-              <img src="host-ashish-bhaiya.jpg" alt="Bade Bhaiya" loading="lazy" decoding="async" />
+              <img src="host-ashish-bhaiya.jpg" alt="Bade Bhaiya" decoding="async" />
             </div>
             <p class="fam-member-name">Ashish</p>
             <p class="fam-member-rel">Bade Bhaiya</p>
@@ -10114,7 +9973,7 @@
           <!-- Groom (2nd son — just a pointer, keep consistent) -->
           <div class="fam-member-card">
             <div class="fam-member-photo-placeholder">
-              <img src="Aman.jpg" alt="Aman" loading="lazy" decoding="async" />
+              <img src="Aman.jpg" alt="Aman" decoding="async" />
             </div>
             <p class="fam-member-name">Aman</p>
             <p class="fam-member-rel">Dulha &#10084;</p>
@@ -10123,7 +9982,7 @@
           <!-- Chhote Bhai (3rd son) -->
           <div class="fam-member-card">
             <div class="fam-member-photo-placeholder">
-              <img src="host-rohan.jpg" alt="Chhota Bhai" loading="lazy" decoding="async" />
+              <img src="host-rohan.jpg" alt="Chhota Bhai" decoding="async" />
             </div>
             <p class="fam-member-name">Rohan</p>
             <p class="fam-member-rel">Chhota Bhai</p>
@@ -10132,7 +9991,7 @@
           <!-- Bhabhi (wife of Bade Bhaiya) -->
           <div class="fam-member-card">
             <div class="fam-member-photo-placeholder">
-              <img src="host-bhabhi.jpg" alt="Bhabhi" loading="lazy" decoding="async" />
+              <img src="host-bhabhi.jpg" alt="Bhabhi" decoding="async" />
             </div>
             <p class="fam-member-name">Lovely</p>
             <p class="fam-member-rel">Bhabhi</p>
@@ -10154,7 +10013,7 @@
           <!-- Bride (big daughter) -->
           <div class="fam-member-card">
             <div class="fam-member-photo-placeholder">
-              <img src="shivani-saree-ghibhli.jpg" alt="Shivani" loading="lazy" decoding="async" />
+              <img src="shivani-saree-ghibhli.jpg" alt="Shivani" decoding="async" />
             </div>
             <p class="fam-member-name">Shivani</p>
             <p class="fam-member-rel">Dulhan &#10084;</p>
@@ -10163,7 +10022,7 @@
           <!-- Chhota Bhai (younger brother of bride) -->
           <div class="fam-member-card">
             <div class="fam-member-photo-placeholder">
-              <img src="piyush.jpg" alt="Chhota Bhai" loading="lazy" decoding="async" />
+              <img src="piyush.jpg" alt="Chhota Bhai" decoding="async" />
             </div>
             <p class="fam-member-name">Piyush</p>
             <p class="fam-member-rel">Chhota Bhai</p>
@@ -10186,7 +10045,7 @@
      BAL AAGRAH — A LITTLE INVITATION
 ════════════════════════════════ -->
   <section class="gsap-section" data-section="balagrah">
-    <img class="remaining-transparent-border" src="assets/balagrah-transparent-border.png" alt="" aria-hidden="true" loading="lazy" decoding="async" >
+    <img class="remaining-transparent-border" src="assets/balagrah-transparent-border.png" alt="" aria-hidden="true" decoding="async" >
     <p class="s-eyebrow">Bal Aagrah</p>
     <span class="s-eyebrow-hindi">बाल आग्रह</span>
     <h2 class="s-title">A Little Invitation</h2>
@@ -10211,7 +10070,7 @@
           <div class="kid-card tilt-card">
             <div class="kid-photo">
               <img src="toshu.jpg" alt="Toshu"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" loading="lazy" decoding="async" />
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" decoding="async" />
               <div class="ph-fallback">&#129299;</div>
             </div>
             <p class="kid-name">Yash</p>
@@ -10219,7 +10078,7 @@
           <div class="kid-card tilt-card">
             <div class="kid-photo">
               <img src="miku.jpg" alt="Miku"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" loading="lazy" decoding="async" />
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" decoding="async" />
               <div class="ph-fallback">&#129299;</div>
             </div>
             <p class="kid-name">Ayansh</p>
@@ -10242,7 +10101,7 @@
           <div class="kid-card tilt-card">
             <div class="kid-photo">
               <img src="bride-kid-sonam.jpg" alt="Kid 1"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" loading="lazy" decoding="async" />
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" decoding="async" />
               <div class="ph-fallback">&#129299;</div>
             </div>
             <p class="kid-name">Sonam</p>
@@ -10250,7 +10109,7 @@
           <div class="kid-card tilt-card">
             <div class="kid-photo">
               <img src="bride-kid-ravi.jpg" alt="Kid 2"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" loading="lazy" decoding="async" />
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" decoding="async" />
               <div class="ph-fallback">&#128104;&#8205;&#128103;</div>
             </div>
             <p class="kid-name">Ravi</p>
@@ -10258,7 +10117,7 @@
           <div class="kid-card tilt-card">
             <div class="kid-photo">
               <img src="bride-kid-arushi.jpg" alt="Kid 3"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" loading="lazy" decoding="async" />
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" decoding="async" />
               <div class="ph-fallback">&#129299;</div>
             </div>
             <p class="kid-name">Arushi</p>
@@ -10266,7 +10125,7 @@
           <div class="kid-card tilt-card">
             <div class="kid-photo">
               <img src="bride-kid-chandani.jpg" alt="Kid 4"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" loading="lazy" decoding="async" />
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" decoding="async" />
               <div class="ph-fallback">&#128104;&#8205;&#128103;</div>
             </div>
             <p class="kid-name">Chandani</p>
@@ -10292,7 +10151,7 @@
      HOSTING FAMILY — meet the hosts
 ════════════════════════════════ -->
   <section class="gsap-section" data-section="hosts">
-    <img class="remaining-transparent-border" src="assets/hosts-transparent-border.png" alt="" aria-hidden="true" loading="lazy" decoding="async" >
+    <img class="remaining-transparent-border" src="assets/hosts-transparent-border.png" alt="" aria-hidden="true" decoding="async" >
     <p class="s-eyebrow">Warmly Welcoming You</p>
     <span class="s-eyebrow-hindi">हार्दिक स्वागत है आपका</span>
     <h2 class="s-title">दर्शनाभिलाषी</h2>
@@ -10572,7 +10431,7 @@
      OUR STORY
 ════════════════════════════════ -->
   <section class="bg-ivory reveal on" data-section="story">
-    <img class="remaining-transparent-border" src="assets/story-transparent-border.png" alt="" aria-hidden="true" loading="lazy" decoding="async" >
+    <img class="remaining-transparent-border" src="assets/story-transparent-border.png" alt="" aria-hidden="true" decoding="async" >
     <p class="s-eyebrow">Our Story</p>
     <span class="s-eyebrow-hindi">हमारी कहानी — जो लिखी थी तकदीर ने</span>
     <h2 class="s-title">How It All Began</h2>
@@ -10747,7 +10606,7 @@
      COUPLE PHOTOS (full gallery)
 ════════════════════════════════ -->
   <section class="reveal" data-section="gallery">
-    <img class="remaining-transparent-border" src="assets/gallery-transparent-border.png" alt="" aria-hidden="true" loading="lazy" decoding="async" >
+    <img class="remaining-transparent-border" src="assets/gallery-transparent-border.png" alt="" aria-hidden="true" decoding="async" >
     <p class="s-eyebrow">The Couple</p>
     <span class="s-eyebrow-hindi">तुम मेरे साथ हो — तो दुनिया खूबसूरत है</span>
     <h2 class="s-title">A Glimpse of Us</h2>
@@ -10761,7 +10620,7 @@
           <circle cx="100" cy="100" r="93" stroke="rgba(34,229,255,0.25)" stroke-width="1.2" stroke-dasharray="4 14" />
         </svg>
         <div class="photo-frame">
-          <img src="couple-pose-1.jpg" alt="Shivani" loading="lazy" decoding="async" />
+          <img src="couple-pose-1.jpg" alt="Shivani" decoding="async" />
         </div>
       </div>
 
@@ -10771,7 +10630,7 @@
           <circle cx="100" cy="100" r="93" stroke="rgba(34,229,255,0.25)" stroke-width="1.2" stroke-dasharray="4 14" />
         </svg>
         <div class="photo-frame">
-          <img src="couple-pose-2.jpg" alt="Shivani" loading="lazy" decoding="async" />
+          <img src="couple-pose-2.jpg" alt="Shivani" decoding="async" />
         </div>
       </div>
 
@@ -10781,7 +10640,7 @@
           <circle cx="100" cy="100" r="93" stroke="rgba(34,229,255,0.25)" stroke-width="1.2" stroke-dasharray="6 10" />
         </svg>
         <div class="photo-frame">
-          <img src="couple-pose-4.jpg" alt="Couple" loading="lazy" decoding="async" />
+          <img src="couple-pose-4.jpg" alt="Couple" decoding="async" />
         </div>
       </div>
 
@@ -10791,7 +10650,7 @@
           <circle cx="100" cy="100" r="93" stroke="rgba(34,229,255,0.25)" stroke-width="1.2" stroke-dasharray="4 14" />
         </svg>
         <div class="photo-frame">
-          <img src="couple-pose-3.jpg" alt="Shivani" loading="lazy" decoding="async" />
+          <img src="couple-pose-3.jpg" alt="Shivani" decoding="async" />
         </div>
       </div>
 
@@ -10818,7 +10677,7 @@
             </defs>
           </svg>
           <div class="photo-frame">
-            <img src="couple-pose-1.jpg" alt="Aman" loading="lazy" />
+            <img src="couple-pose-1.jpg" alt="Aman" />
           </div>
         </div>
 
@@ -10838,7 +10697,7 @@
             </defs>
           </svg>
           <div class="photo-frame">
-            <img src="couple-pose-2.jpg" alt="Shivani" loading="lazy" />
+            <img src="couple-pose-2.jpg" alt="Shivani" />
           </div>
         </div>
 
@@ -10853,7 +10712,7 @@
             <circle cx="193" cy="100" r="3.5" fill="#c9aa72" opacity="0.8" />
           </svg>
           <div class="photo-frame">
-            <img src="couple-pose-4.jpg" alt="Aman संग Shivani" loading="lazy" />
+            <img src="couple-pose-4.jpg" alt="Aman संग Shivani" />
           </div>
         </div>
 
@@ -10873,7 +10732,7 @@
             </defs>
           </svg>
           <div class="photo-frame">
-            <img src="couple-pose-3.jpg" alt="Shivani" loading="lazy" />
+            <img src="couple-pose-3.jpg" alt="Shivani" />
           </div>
         </div>
 
@@ -10884,7 +10743,7 @@
               stroke-dasharray="4 14" />
           </svg>
           <div class="photo-frame">
-            <img src="couple-pose-5.png" alt="Couple pose 5" loading="lazy" />
+            <img src="couple-pose-5.png" alt="Couple pose 5" />
           </div>
         </div>
 
@@ -10915,7 +10774,7 @@
      COUNTDOWN
 ════════════════════════════════ -->
   <section class="bg-dark reveal" data-section="countdown" style="text-align:center">
-    <img class="remaining-transparent-border" src="assets/countdown-transparent-border.png" alt="" aria-hidden="true" loading="lazy" decoding="async" >
+    <img class="remaining-transparent-border" src="assets/countdown-transparent-border.png" alt="" aria-hidden="true" decoding="async" >
     <p class="s-eyebrow light">Counting Down</p>
     <span class="s-eyebrow-hindi" style="color:rgba(201,170,114,0.5);">हाँ, मैं कहूँगा — तुम मेरी हो</span>
     <h2 class="s-title light">Until We Say "I Do"</h2>
@@ -10952,7 +10811,7 @@
      RSVP
 ════════════════════════════════ -->
   <section class="reveal" data-section="rsvp" style="background:transparent; padding: 72px 28px;">
-    <img class="remaining-transparent-border" src="assets/rsvp-transparent-border.png" alt="" aria-hidden="true" loading="lazy" decoding="async" >
+    <img class="remaining-transparent-border" src="assets/rsvp-transparent-border.png" alt="" aria-hidden="true" decoding="async" >
     <div class="rsvp-box glow-gold tilt-card card-frame">
       <span class="cf-top-bud" aria-hidden="true">❁</span>
       <span class="cf-bottom-bud" aria-hidden="true">❁</span>
@@ -11968,24 +11827,18 @@
       });
     })();
 
-    /* ── GSAP ScrollTrigger: staggered premium reveal for the new grid sections ── */
+    /* ── Section entry: no fade/stagger delay — content is visible
+       immediately when scrolled to. Still tracks which section is
+       active for the ambient background hue shift below. ── */
     (function () {
       var sections = document.querySelectorAll('.gsap-section');
       if (!sections.length) return;
-      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-        sections.forEach(function (s) { s.style.opacity = 1; });
-        return;
-      }
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
       gsap.registerPlugin(ScrollTrigger);
-      var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       sections.forEach(function (section) {
-        var kids = Array.prototype.slice.call(section.children);
-        if (reduceMotion) return;
-        gsap.set(kids, { opacity: 0, y: 36, scale: 0.96 });
         ScrollTrigger.create({
           trigger: section, start: 'top 80%', once: true,
           onEnter: function () {
-            gsap.to(kids, { opacity: 1, y: 0, scale: 1, duration: 0.85, stagger: 0.12, ease: 'back.out(1.4)' });
             if (document.body.classList.contains('entered')) {
               var key = section.dataset.section;
               if (key) Wedding.enterSection(key);
@@ -11999,58 +11852,12 @@
     (function () {
       var chips = document.querySelectorAll('.host-name-chip');
       if (!chips.length) return;
-      var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduceMotion) return;
-
-      /* Hide chips initially; reveal them with a gentle fade+lift on scroll */
-      chips.forEach(function (c) {
-        c.style.opacity = '0';
-        c.style.transform = 'translateY(18px) scale(0.92)';
-        c.style.transition = 'opacity 0.5s ease, transform 0.5s cubic-bezier(.22,.68,0,1.3)';
-      });
-
-      if (typeof IntersectionObserver !== 'undefined') {
-        ['.hosts-carousel-side.groom', '.hosts-carousel-side.bride'].forEach(function (sel) {
-          var side = document.querySelector(sel);
-          if (!side) return;
-          var sideChips = Array.prototype.slice.call(side.querySelectorAll('.host-name-chip'));
-          var obs = new IntersectionObserver(function (entries) {
-            if (entries[0].isIntersecting) {
-              obs.disconnect();
-              sideChips.forEach(function (chip, i) {
-                setTimeout(function () {
-                  chip.style.opacity = '1';
-                  chip.style.transform = 'none';
-                }, i * 110);
-              });
-            }
-          }, { threshold: 0.12 });
-          obs.observe(side);
-        });
-      } else {
-        chips.forEach(function (c) { c.style.opacity = '1'; c.style.transform = 'none'; });
-      }
+      chips.forEach(function (c) { c.style.opacity = '1'; c.style.transform = 'none'; });
     })();
 
-    /* ── Pen-write scroll reveal for kid-quote paragraphs ── */
-    (function () {
-      var quotes = document.querySelectorAll('[data-pen-quote]');
-      if (!quotes.length) return;
-      var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduceMotion) return;
-
-      quotes.forEach(function (q) {
-        var obs = new IntersectionObserver(function (entries) {
-          if (entries[0].isIntersecting) {
-            obs.disconnect();
-            q.classList.add('pen-write');
-            /* After animation done, clean up cursor */
-            setTimeout(function () { q.classList.add('done'); }, 3200);
-          }
-        }, { threshold: 0.5 });
-        obs.observe(q);
-      });
-    })();
+    /* Pen-write chip typewriter effect removed — kid-quote paragraphs are
+       already plain, visible text by default (the CSS only clips them if
+       the now-removed .pen-write class was added), so no JS is needed. */
 
     /* ── Three.js hero emblem: two slowly rotating interlocked rings, lazy-init on gate open.
        Optimised: desktop-only (tablets now get the lightweight static SVG fallback too),
@@ -12754,8 +12561,7 @@
 
       function initWeddingFireworks() {
         const canvas = document.getElementById('wedding-fireworks');
-        const hero = canvas && canvas.closest('.hero');
-        if (!canvas || !hero) return;
+        if (!canvas) return;
 
         const ctx = canvas.getContext('2d', { alpha: true });
         if (!ctx) return;
@@ -13100,8 +12906,7 @@
 
       function initWeddingLightning() {
         const canvas = document.getElementById('wedding-lightning');
-        const hero = canvas && canvas.closest('.hero');
-        if (!canvas || !hero) return;
+        if (!canvas) return;
 
         const ctx = canvas.getContext('2d', { alpha: true });
         if (!ctx) return;
@@ -13297,6 +13102,7 @@
     })();
   </script>
 
+  <!-- DRONE LIGHT-SHOW SCRIPT — COMMENTED OUT
   <script id="wedding-drones-script">
     (function () {
       'use strict';
@@ -13508,7 +13314,39 @@
       }
     })();
   </script>
+  -->
 
+
+  <script id="wedding-video-script">
+    (function () {
+      'use strict';
+      var video = document.getElementById('wedding-invitation-video');
+      if (!video) return;
+
+      // Silent autoplay is intentionally used so the visual invitation behaves
+      // like an animated page section rather than a visible video player.
+      video.muted = true;
+      video.defaultMuted = true;
+      video.setAttribute('muted', '');
+
+      function playVideo() {
+        var p = video.play();
+        if (p && typeof p.catch === 'function') p.catch(function () {});
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', playVideo, { once: true });
+      } else {
+        playVideo();
+      }
+
+      video.addEventListener('canplay', playVideo, { once: true });
+      video.addEventListener('ended', playVideo);
+      document.addEventListener('visibilitychange', function () {
+        if (!document.hidden) playVideo();
+      });
+    })();
+  </script>
 
 </body>
 
